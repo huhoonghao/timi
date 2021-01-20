@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @GetMapping("query")
     public String test(){
-        System.out.println("test1111111");
+        System.out.println("test1111111111");
         return "This is a Test";
     }
 }
