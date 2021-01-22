@@ -1,0 +1,9 @@
+nacos:
+  config:
+    namespace: public
+    server-addr: 121.4.49.169:8848
+    bootstrap:
+      enable: true
+      log-enable: true
+    data-id: timi
+    type: yaml
