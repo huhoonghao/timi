@@ -17,9 +17,9 @@ public class UserSerivceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
     @Override
-    public String getUser(){
+    public User getUser(){
         User user = userMapper.selectById(1);
-        return user.getEmail();
+        return user;
     }
 
 }
