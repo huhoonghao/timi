@@ -1,9 +1,11 @@
 package com.timi.modules.user.security;
 
+import com.timi.modules.user.security.file.BeforeLoginFilter;
 import com.timi.modules.user.security.handler.CustomAccessDeniedHandler;
 import com.timi.modules.user.security.handler.CustomLoginFailureHandler;
 import com.timi.modules.user.security.handler.CustomLoginSuccessHandler;
 import com.timi.modules.user.service.impl.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,9 +14,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * security 安全配置
@@ -26,7 +28,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
+    @Autowired
+    private BeforeLoginFilter beforeLoginFilter;
     /**
      * 自定义，从数据库获取用户信息
      *
@@ -99,6 +102,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().successHandler(customLoginSuccessHandler())
                 .failureHandler(customLoginFailureHandler());
+
+                 http.addFilterBefore(beforeLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 }
