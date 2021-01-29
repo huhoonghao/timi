@@ -1,7 +1,7 @@
 package com.timi.modules.user.dao;
 
-import com.timi.common.TimiBaseMapper;
-import com.timi.modules.user.entity.User;
+import com.timi.common.mybatisPlus.TimiBaseMapper;
+import com.timi.modules.user.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2021/1/25
  */
 @Mapper
-public interface UserMapper extends TimiBaseMapper<User> {
+public interface UserMapper extends TimiBaseMapper<UserEntity> {
 }

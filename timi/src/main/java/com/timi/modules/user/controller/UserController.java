@@ -1,7 +1,7 @@
 package com.timi.modules.user.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
-import com.timi.modules.user.entity.User;
+import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.service.SpringContextUtil;
 import com.timi.modules.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,11 @@ public class UserController {
     @Autowired
     private UserService userService;
     @GetMapping("query")
-    public User test(){
+    public UserEntity test(){
         String supperUserName = applicationContext.getEnvironment().getProperty("supperUserName");
         String st=supperUserName+"-------------"+emailServer;
-        User user = userService.getUser();
+        System.out.println("---------------------------------------------------"+st);
+        UserEntity user = userService.getUser();
         return user;
     }
 
@@ -39,9 +40,10 @@ public class UserController {
         Object bean = SpringContextUtil.getBean("userSerivceImpl");
         Method methods = bean.getClass().getMethod("getUser");
         Object invoke = methods.invoke(bean);
-        if(checkObjFieldIsNull(invoke)){
+        System.out.println("---------------------------------------------------"+invoke);
+   /*     if(checkObjFieldIsNull(invoke)){
             System.out.println(".............");
-        }
+        }*/
         return bean;
     }
 
@@ -50,7 +52,7 @@ public class UserController {
         boolean flag = false;
         for(Field f : obj.getClass().getDeclaredFields()){
             f.setAccessible(true);
-            if(f.getName().equals("userName")){
+            if(f.getName().equals("username")){
                 Object o = f.get(obj);
                 if(o!=null){
                     return flag;

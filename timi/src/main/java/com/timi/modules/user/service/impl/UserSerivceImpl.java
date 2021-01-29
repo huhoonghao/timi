@@ -1,7 +1,9 @@
 package com.timi.modules.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.timi.modules.user.dao.UserMapper;
-import com.timi.modules.user.entity.User;
+import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,23 @@ import org.springframework.stereotype.Service;
 public class UserSerivceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+
     @Override
-    public User getUser(){
-        User user = userMapper.selectById(1);
+    public UserEntity getUser(){
+        UserEntity user = userMapper.selectById(1042);
         return user;
+    }
+
+    @Override
+    public UserEntity findByUsername(String username) {
+        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getUsername, username);
+        UserEntity userEntity = userMapper.selectOne(queryWrapper);
+        //当用户不存在时，抛出异常
+        if (userEntity == null) {
+            throw new RuntimeException();
+        }
+
+        return userEntity;
     }
 
 }

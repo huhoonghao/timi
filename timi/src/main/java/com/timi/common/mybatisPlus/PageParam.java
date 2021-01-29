@@ -1,4 +1,4 @@
-package com.timi.common;
+package com.timi.common.mybatisPlus;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.timi.modules;
+package com.timi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
