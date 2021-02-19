@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 
 /**
  * 自定义security的UserDetailsService,从数据库获取用户信息
- *
- * @author lirui
- * @since 2020-06-13
  */
 public class CustomUserDetailsService implements UserDetailsService {
 

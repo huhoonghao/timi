@@ -10,8 +10,6 @@ import java.util.Date;
 
 /**
  * 基础实体类
- * @author lr
- * @since 2020-03-23
  */
 @Data
 public class BaseEntity {

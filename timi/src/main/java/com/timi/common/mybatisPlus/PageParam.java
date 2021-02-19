@@ -4,8 +4,6 @@ import lombok.Data;
 
 /**
  * 分页参数
- * @author lr
- * @since 2020-03-23
  */
 @Data
 public class PageParam {

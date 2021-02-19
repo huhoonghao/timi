@@ -5,8 +5,6 @@ import java.util.Set;
 
 /**
  * 用户上下文信息，用户名和角色等
- * @author lirui
- * @since 2020-07-01
  */
 public class UserContext {
 

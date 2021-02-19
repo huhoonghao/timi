@@ -7,8 +7,6 @@ import java.io.Serializable;
 
 /**
  * 角色与资源关联表
- * @author lirui
- * @since 2020-06-13
  */
 @Data
 public class RoleResourceEntity extends BaseEntity implements Serializable {

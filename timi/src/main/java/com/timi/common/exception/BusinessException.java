@@ -2,8 +2,6 @@ package com.timi.common.exception;
 
 /**
  * 业务异常封装类
- * @author lirui
- * @since 2020-03-23
  */
 
 public class BusinessException extends RuntimeException{

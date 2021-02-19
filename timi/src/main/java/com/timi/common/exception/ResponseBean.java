@@ -11,8 +11,6 @@ import java.util.function.Consumer;
 
 /**
  * 响应实体
- * @author lirui
- * @since 2020-07-01
  */
 public final class ResponseBean implements Serializable {
 

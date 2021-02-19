@@ -10,8 +10,6 @@ import java.io.IOException;
 
 /**
  * 没登录处理
- * @author lirui
- * @since 2020-06-20
  */
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override

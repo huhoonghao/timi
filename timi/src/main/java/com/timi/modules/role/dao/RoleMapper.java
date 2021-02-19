@@ -7,8 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 角色数据库操作
- * @author lirui
- * @since 2020-06-13
  */
 @Mapper
 public interface RoleMapper extends BaseMapper<RoleEntity> {

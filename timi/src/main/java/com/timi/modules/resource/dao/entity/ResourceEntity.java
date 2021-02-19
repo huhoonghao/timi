@@ -11,8 +11,6 @@ import java.util.List;
 
 /**
  * 菜单
- * @author lirui
- * @since 2020-06-24
  *
  **/
 @Data

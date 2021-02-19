@@ -4,8 +4,6 @@ import org.springframework.util.Assert;
 
 /**
  * 用户上下文操作
- * @author lirui
- * @since 2020-07-01
  */
 public class UserContentHolder {
 

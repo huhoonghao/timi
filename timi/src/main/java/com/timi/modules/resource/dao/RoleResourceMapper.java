@@ -10,8 +10,6 @@ import java.util.List;
 
 /**
  * 资源数据库操作
- * @author lirui
- * @since 2020-06-13
  */
 @Mapper
 public interface RoleResourceMapper extends BaseMapper<RoleResourceEntity> {

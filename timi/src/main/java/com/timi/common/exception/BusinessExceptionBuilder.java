@@ -2,8 +2,6 @@ package com.timi.common.exception;
 
 /**
  * 异常构建类
- * @author lirui
- * @since 2019-08-26 10:29
  */
 public class BusinessExceptionBuilder {
 

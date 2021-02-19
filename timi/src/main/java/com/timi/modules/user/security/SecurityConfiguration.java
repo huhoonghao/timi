@@ -20,9 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * security 安全配置
- *
- * @author lirui
- * @since 2020-06-13
  */
 @Configuration
 @EnableGlobalMethodSecurity(jsr250Enabled = true)

@@ -10,8 +10,6 @@ import java.io.IOException;
 
 /**
  * 登录成功
- * @author lirui
- * @since 2020-06-24
  */
 public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 

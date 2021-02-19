@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存帮助类
- * @author lirui
- * @since 2020-06-20
  */
 public class CacheHelper {
 
