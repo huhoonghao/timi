@@ -1,4 +1,4 @@
-package com.timi.common.redis;
+package com.timi;
 
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -15,7 +16,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存帮助类
+ * @since 2020-06-20
  */
+@Component
 public class CacheHelper {
 
     @Autowired
@@ -122,9 +125,10 @@ public class CacheHelper {
         BoundValueOperations<String, String> operations = stringRedisTemplate.boundValueOps(regKey);
         operations.set(value, time, timeUnit);
     }
-
+    String BLANK_REPLACE = "\\s+";
+    String BLANK = "";
     public String regKey(String key) {
-        return RegExUtils.replaceAll(key,  "\\s+", "");
+        return RegExUtils.replaceAll(key, BLANK_REPLACE, BLANK);
     }
 
 
