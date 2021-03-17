@@ -1,4 +1,4 @@
-package com.timi;
+package com.timi.common.cache;
 
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;

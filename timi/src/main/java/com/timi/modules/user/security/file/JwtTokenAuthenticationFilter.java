@@ -1,7 +1,7 @@
-package com.timi.modules.user.security.handler;
+package com.timi.modules.user.security.file;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.timi.CacheHelper;
+import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.holder.UserContext;

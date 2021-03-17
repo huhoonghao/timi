@@ -1,7 +1,7 @@
 package com.timi.modules.user.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.timi.CacheHelper;
+import com.timi.common.cache.CacheHelper;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.RedisKeyEnum;
 import com.timi.modules.user.security.utils.JwtUtils;
