@@ -4,11 +4,13 @@ import com.timi.modules.user.security.file.BeforeLoginFilter;
 import com.timi.modules.user.security.handler.CustomAccessDeniedHandler;
 import com.timi.modules.user.security.handler.CustomLoginFailureHandler;
 import com.timi.modules.user.security.handler.CustomLoginSuccessHandler;
+import com.timi.modules.user.security.handler.JwtTokenAuthenticationFilter;
 import com.timi.modules.user.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,6 +29,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private BeforeLoginFilter beforeLoginFilter;
+
+    @Autowired
+    private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
     /**
      * 自定义，从数据库获取用户信息
      *
@@ -100,7 +105,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().successHandler(customLoginSuccessHandler())
                 .failureHandler(customLoginFailureHandler());
 
-                 http.addFilterBefore(beforeLoginFilter, UsernamePasswordAuthenticationFilter.class);
+                // http.addFilterBefore(beforeLoginFilter, UsernamePasswordAuthenticationFilter.class);
+                 http.addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
+
+
 }

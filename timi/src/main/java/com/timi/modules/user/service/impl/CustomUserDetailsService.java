@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 /**
  * 自定义security的UserDetailsService,从数据库获取用户信息
  */
+@Component
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired

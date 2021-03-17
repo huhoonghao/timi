@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
  * @date 2021/1/19
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private ConfigurableApplicationContext applicationContext;
@@ -26,7 +26,7 @@ public class UserController {
     private String emailServer;
     @Autowired
     private UserService userService;
-    @GetMapping("query")
+    @GetMapping("/query")
     public UserEntity test(){
         String supperUserName = applicationContext.getEnvironment().getProperty("supperUserName");
         String st=supperUserName+"-------------"+emailServer;
