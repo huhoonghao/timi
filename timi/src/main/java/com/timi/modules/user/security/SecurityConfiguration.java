@@ -27,9 +27,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private BeforeLoginFilter beforeLoginFilter;
-
-    @Autowired
     private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
     /**
      * 自定义，从数据库获取用户信息
@@ -92,19 +89,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.exceptionHandling()
+                //未登录
                 .accessDeniedHandler(accessDeniedHandler())
                 .and()
                 .csrf().disable()
+                //不会保存session状态
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login","/logout", "/health").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                //登录成功
                 .formLogin().successHandler(customLoginSuccessHandler())
+                //登录失败
                 .failureHandler(customLoginFailureHandler());
-
-                // http.addFilterBefore(beforeLoginFilter, UsernamePasswordAuthenticationFilter.class);
                  http.addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     }

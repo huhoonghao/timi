@@ -49,13 +49,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         //构建security的用户对象
         //账号是否可用
         boolean enabled = Enabled.YES.getValue().equals(userEntity.getEnabled());
-       /* //账号是否未锁定
-        boolean accountNonLocked = Enabled.NO.getValue().equals(userEntity.getAccountLocked());
+       //账号是否未锁定
+        boolean accountNonLocked = Enabled.YES.getValue().equals(userEntity.getAccountLocked());
         //账号是否过期
         boolean accountNonExpired = Enabled.YES.getValue().equals(userEntity.getAccountNonExpired());
         //密码是否过期
-        boolean credentialsNonExpired = Enabled.YES.getValue().equals(userEntity.getCredentialsNonExpired());*/
+        boolean credentialsNonExpired = Enabled.YES.getValue().equals(userEntity.getCredentialsNonExpired());
 
-        return new User(userEntity.getUsername(), userEntity.getPassword(),authorities);
+        return new User(userEntity.getUsername(), userEntity.getPassword(),enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+
     }
 }

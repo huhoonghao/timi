@@ -115,9 +115,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     private Authentication createSuccessfulAuthentication(HttpServletRequest request,
                                                           UserDetails user) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
-
         authenticationToken.setDetails(this.authenticationDetailsSource.buildDetails(request));
-
         return authenticationToken;
     }
 
