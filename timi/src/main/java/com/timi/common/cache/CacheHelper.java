@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存帮助类
+ *
  * @since 2020-06-20
  */
 @Component
@@ -27,6 +28,7 @@ public class CacheHelper {
 
     /**
      * 获取指定key的String类型缓存
+     *
      * @param key
      * @return
      */
@@ -41,6 +43,7 @@ public class CacheHelper {
 
     /**
      * 获取指定key的String类型缓存
+     *
      * @param key
      * @return
      */
@@ -48,6 +51,8 @@ public class CacheHelper {
         String regKey = regKey(key);
         if (StringUtils.isBlank(regKey)) {
             return false;
+
+
         }
         BoundValueOperations<String, String> operations = stringRedisTemplate.boundValueOps(regKey);
 
@@ -57,6 +62,7 @@ public class CacheHelper {
 
     /**
      * 增加1
+     *
      * @param key
      * @return
      */
@@ -67,16 +73,18 @@ public class CacheHelper {
 
     /**
      * 设置失效时间
+     *
      * @param key
      * @param timeUnit
      * @param timeout
      */
-    public void expire(String key, TimeUnit timeUnit , Long timeout) {
+    public void expire(String key, TimeUnit timeUnit, Long timeout) {
         stringRedisTemplate.expire(key, timeout, timeUnit);
     }
 
     /**
      * 增加1
+     *
      * @param key
      * @return
      */
@@ -87,6 +95,7 @@ public class CacheHelper {
 
     /**
      * 是否存在指定KEY
+     *
      * @param key
      * @return
      */
@@ -97,6 +106,7 @@ public class CacheHelper {
 
     /**
      * 设置指定key的String类型缓存
+     *
      * @param key
      * @param value 缓存值
      * @return
@@ -112,6 +122,7 @@ public class CacheHelper {
 
     /**
      * 设置指定key的String类型缓存，包含过期时间
+     *
      * @param key
      * @param value
      * @param time
@@ -125,6 +136,7 @@ public class CacheHelper {
         BoundValueOperations<String, String> operations = stringRedisTemplate.boundValueOps(regKey);
         operations.set(value, time, timeUnit);
     }
+
     String BLANK_REPLACE = "\\s+";
     String BLANK = "";
     public String regKey(String key) {
@@ -134,6 +146,7 @@ public class CacheHelper {
 
     /**
      * 设置指定key的String类型缓存，包含过期时间
+     *
      * @param key
      * @param value
      * @param seconds
@@ -141,8 +154,10 @@ public class CacheHelper {
     public void stringSetExpire(String key, String value, long seconds) {
         stringSetExpire(key, value, seconds, TimeUnit.SECONDS);
     }
+
     /**
      * 获取指定key的hash缓存
+     *
      * @param key
      * @return
      */
@@ -154,6 +169,7 @@ public class CacheHelper {
 
     /**
      * 获取指定key的hash中对应的值
+     *
      * @param key
      * @param hashKey
      * @return
@@ -172,10 +188,10 @@ public class CacheHelper {
         if (hashKey.contains(",")) {
             String[] split = hashKey.split(",");
             String reduce = Arrays.stream(split).reduce("", (all, item) -> {
-                if(StringUtils.isBlank(all)) {
+                if (StringUtils.isBlank(all)) {
                     all = operations.get(item);
                 } else {
-                    all = all+ "," + operations.get(item);
+                    all = all + "," + operations.get(item);
                 }
                 return all;
             });
@@ -187,6 +203,7 @@ public class CacheHelper {
 
     /**
      * 删除Hash中指定key的值
+     *
      * @param key
      * @param hashKey
      * @return
@@ -206,6 +223,7 @@ public class CacheHelper {
 
     /**
      * 判断指定key的hash中包含指定hashKey
+     *
      * @param key
      * @param hashKey
      * @return
@@ -225,6 +243,7 @@ public class CacheHelper {
 
     /**
      * 判断指定key的hash中包含指定hashKeys中任何一个
+     *
      * @param key
      * @param hashKeys
      * @return
@@ -235,7 +254,7 @@ public class CacheHelper {
             return false;
         }
         BoundHashOperations<String, String, String> operations = stringRedisTemplate.boundHashOps(regKey);
-        for (String hashKey: hashKeys ) {
+        for (String hashKey : hashKeys) {
             if (operations.hasKey(hashKey)) {
                 return true;
             }
@@ -244,9 +263,9 @@ public class CacheHelper {
     }
 
 
-
     /**
      * 设置指定key的hash缓存
+     *
      * @param key
      * @param hashKey
      * @param hashValue
@@ -268,6 +287,7 @@ public class CacheHelper {
 
     /**
      * 设置指定key的hash缓存
+     *
      * @param hash
      * @return
      */
@@ -282,6 +302,7 @@ public class CacheHelper {
 
     /**
      * 删除指定key
+     *
      * @param key
      * @return
      */
@@ -295,6 +316,7 @@ public class CacheHelper {
 
     /**
      * 向集合中添加
+     *
      * @param key
      * @param values
      * @return
@@ -306,16 +328,17 @@ public class CacheHelper {
 
     /**
      * 向集合中添加
+     *
      * @param key
      * @param values
-     * @param clear 是否清空旧数据
+     * @param clear  是否清空旧数据
      * @return
      */
     public Long setAdd(String key, String[] values, boolean clear) {
         if (clear) {
             stringRedisTemplate.delete(key);
         }
-        if (values != null && values.length ==0) {
+        if (values != null && values.length == 0) {
             return 0L;
         }
         BoundSetOperations<String, String> setOperations = stringRedisTemplate.boundSetOps(key);
@@ -324,6 +347,7 @@ public class CacheHelper {
 
     /**
      * 返回对应key的集合
+     *
      * @param key
      * @return
      */
@@ -334,6 +358,7 @@ public class CacheHelper {
 
     /**
      * 判断集合中是否有对应的value
+     *
      * @param key
      * @param value
      * @return

@@ -1,6 +1,7 @@
 package com.timi.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.timi.modules.user.dao.UserMapper;
 import com.timi.modules.user.entity.UserEntity;
@@ -18,7 +19,10 @@ import org.springframework.stereotype.Service;
 public class UserSerivceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
-
+    @Override
+    public BaseMapper<UserEntity> getMapper() {
+        return userMapper;
+    }
     @Override
     public UserEntity getUser(){
         UserEntity user = userMapper.selectById(1042);
@@ -36,5 +40,4 @@ public class UserSerivceImpl implements UserService {
 
         return userEntity;
     }
-
 }

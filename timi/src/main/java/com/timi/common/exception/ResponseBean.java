@@ -32,13 +32,14 @@ public final class ResponseBean implements Serializable {
         this.args = builder.args;
         this.content = builder.content;
     }
-
     /**
-     * 后续处理
-     * 修改请求参数param，param作为对象传递过去
      *
-     * @param consumer
-     * @return
+     * @Title: thenAsync
+     * @Description: 后续处理 修改请求参数param，param作为对象传递过去
+     * @Author hhh
+     * @Date 2021/5/14 10:32
+     * @Param [consumer, param]
+     * @Return com.timi.common.exception.ResponseBean
      */
     public ResponseBean thenAsync(Consumer<Object> consumer, Object param) {
         //异步执行

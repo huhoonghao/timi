@@ -1,12 +1,15 @@
 package com.timi.modules.user.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.timi.common.base.BaseController;
+import com.timi.common.base.BaseService;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
-import com.timi.modules.resource.dao.entity.ResourceEntity;
 import com.timi.modules.resource.service.ResourceService;
 import com.timi.modules.role.service.RoleService;
+import com.timi.modules.user.controller.dto.UserDTO;
+import com.timi.modules.user.controller.param.UserParam;
 import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.service.UserService;
@@ -29,7 +32,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController <UserParam, UserEntity, UserDTO>{
     @Autowired
     private ConfigurableApplicationContext applicationContext;
     @NacosValue("${email.server.address}")
@@ -42,6 +45,21 @@ public class UserController {
     private ResourceService resourceService;
     @Autowired
     private CacheHelper cacheHelper;
+
+    @Override
+    public BaseService<UserParam, UserEntity> getService() {
+        return userService;
+    }
+    @Override
+    public UserDTO getDTO() {
+        return new UserDTO();
+    }
+    @Override
+    public UserEntity getEntity() {
+        return new UserEntity();
+    }
+
+
     @GetMapping("/query")
     public UserEntity test(){
         String supperUserName = applicationContext.getEnvironment().getProperty("supperUserName");
@@ -83,6 +101,7 @@ public class UserController {
         ResponseBean listResponseBean = ResponseBean.builder().content(userInfo).build();
         return listResponseBean;
     }
+
 
 
 
