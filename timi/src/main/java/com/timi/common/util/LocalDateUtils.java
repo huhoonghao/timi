@@ -1,4 +1,4 @@
-package com.timi.modules.user.security.utils;
+package com.timi.common.util;
 
 import java.time.Instant;
 import java.time.LocalDate;

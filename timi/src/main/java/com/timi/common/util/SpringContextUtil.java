@@ -1,4 +1,4 @@
-package com.timi.modules.user.service;
+package com.timi.common.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;

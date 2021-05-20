@@ -4,7 +4,7 @@ package com.timi.common.annotation;
 import java.lang.annotation.*;
 
 /**
- * DTO跳过指定字段
+ *
  * @author lr
  * @since 2021-01-19
  */

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
-import com.timi.modules.user.constant.Enabled;
+import com.timi.common.constant.user.Enabled;
 import com.timi.modules.user.dao.UserMapper;
 import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.service.UserService;

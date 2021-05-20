@@ -15,30 +15,8 @@ package com.timi.common.exception;
  * @since 2020-07-02
  */
 public interface ErrorCode {
-
-    /**
-     * business 模块标准错误代码
-     */
-    String BUSINESS_CODE = "01";
-
-    /**
-     * user 模块标准错误代码
-     */
-    String USER_CODE = "02";
-
-    /**
-     * 详情不存在
-     */
-    String DETAIL_ID_NOT_EXIST = "500-00-0001";
-
     /**
      * jwt解析token中用户名不存在
      */
     String TOKEN_USERNAME_NOT_EXIST = "500-00-0002";
-
-    /**
-     * 上传文件失败
-     */
-    String UPLOAD_FILE_ERROR = "500-00-0003";
-
 }

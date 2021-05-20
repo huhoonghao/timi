@@ -1,7 +1,6 @@
 package com.timi.modules.user.controller.param;
 
-import com.timi.common.mybatisPlus.BaseEntity;
-import com.timi.common.mybatisPlus.PageParam;
+import com.timi.common.base.PageParam;
 
 /**
  * @author hhh

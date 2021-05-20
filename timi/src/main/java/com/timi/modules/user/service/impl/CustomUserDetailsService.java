@@ -3,7 +3,7 @@ package com.timi.modules.user.service.impl;
 
 import com.timi.modules.resource.service.ResourceService;
 import com.timi.modules.role.service.RoleService;
-import com.timi.modules.user.constant.Enabled;
+import com.timi.common.constant.user.Enabled;
 import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

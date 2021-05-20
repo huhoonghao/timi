@@ -1,4 +1,4 @@
-package com.timi.common.annotation.Enum;
+package com.timi.common.annotation;
 
 /**
  * 翻译类型
@@ -6,6 +6,5 @@ package com.timi.common.annotation.Enum;
  * @since 2021-04-09
  */
 public enum FormatterEnum {
-
     OBJECT,LIST
 }

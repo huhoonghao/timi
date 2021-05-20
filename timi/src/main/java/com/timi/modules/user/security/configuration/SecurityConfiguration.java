@@ -1,4 +1,4 @@
-package com.timi.modules.user.security;
+package com.timi.modules.user.security.configuration;
 
 import com.timi.modules.user.security.file.BeforeLoginFilter;
 import com.timi.modules.user.security.handler.CustomAccessDeniedHandler;

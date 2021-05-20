@@ -1,7 +1,5 @@
 package com.timi.common.annotation;
 
-import com.timi.common.annotation.Enum.FormatterEnum;
-
 import java.lang.annotation.*;
 
 /**

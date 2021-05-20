@@ -1,6 +1,7 @@
-package com.timi.common.mybatisPlus;
+package com.timi.common.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.timi.common.base.BaseEntity;
 
 /**
  * @author hhh

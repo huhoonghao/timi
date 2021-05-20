@@ -1,4 +1,4 @@
-package com.timi.common.annotation.Enum;
+package com.timi.common.annotation;
 
 /**
  *  查询条件

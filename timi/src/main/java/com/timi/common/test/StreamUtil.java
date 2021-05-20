@@ -1,13 +1,10 @@
 package com.timi.common.test;
 
 
-import com.timi.common.mybatisPlus.BaseEntity;
-import com.timi.modules.user.entity.UserEntity;
+import com.timi.common.base.BaseEntity;
 
-import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author hhh

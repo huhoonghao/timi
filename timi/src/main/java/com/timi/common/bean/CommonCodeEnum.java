@@ -2,7 +2,6 @@ package com.timi.common.bean;
 
 /**
  * 全局常量枚举
- * @author lirui
  * @since 2020-06-21
  */
 public enum CommonCodeEnum {

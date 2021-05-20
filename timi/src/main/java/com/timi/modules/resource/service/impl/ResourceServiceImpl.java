@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.timi.modules.resource.dao.RoleResourceMapper;
 import com.timi.modules.resource.dao.entity.RoleResourceEntity;
 import com.timi.modules.resource.service.ResourceService;
-import com.timi.modules.user.constant.Enabled;
+import com.timi.common.constant.user.Enabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

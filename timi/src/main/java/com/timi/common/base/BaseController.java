@@ -3,8 +3,6 @@ package com.timi.common.base;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timi.common.bean.ResponseBean;
-import com.timi.common.mybatisPlus.BaseEntity;
-import com.timi.common.mybatisPlus.PageParam;
 import com.timi.common.util.TimiUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

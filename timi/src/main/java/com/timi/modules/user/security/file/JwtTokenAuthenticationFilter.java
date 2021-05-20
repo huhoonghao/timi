@@ -5,7 +5,7 @@ import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.holder.UserContext;
-import com.timi.modules.user.security.utils.JwtUtils;
+import com.timi.common.util.JwtUtils;
 import com.timi.modules.user.service.impl.CustomUserDetailsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

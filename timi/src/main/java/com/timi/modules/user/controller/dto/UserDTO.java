@@ -1,7 +1,6 @@
 package com.timi.modules.user.controller.dto;
 
 import com.timi.common.base.BaseDTO;
-import com.timi.common.mybatisPlus.BaseEntity;
 
 /**
  * @author hhh

@@ -1,8 +1,7 @@
 package com.timi.modules.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.timi.common.mybatisPlus.BaseEntity;
-import lombok.Data;
+import com.timi.common.base.BaseEntity;
 
 /**
  * @author hhh

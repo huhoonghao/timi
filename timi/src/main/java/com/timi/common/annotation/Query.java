@@ -1,5 +1,4 @@
 package com.timi.common.annotation;
-import com.timi.common.annotation.Enum.QueryEnum;
 
 import java.lang.annotation.*;
 

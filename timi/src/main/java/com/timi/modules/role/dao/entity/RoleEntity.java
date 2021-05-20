@@ -1,7 +1,7 @@
 package com.timi.modules.role.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.timi.common.mybatisPlus.BaseEntity;
+import com.timi.common.base.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;

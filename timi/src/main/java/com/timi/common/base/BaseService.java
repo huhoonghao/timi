@@ -8,8 +8,6 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timi.common.annotation.Query;
 import com.timi.common.constant.TimiConstant;
-import com.timi.common.mybatisPlus.BaseEntity;
-import com.timi.common.mybatisPlus.PageParam;
 import com.timi.common.util.TimiUtils;
 import org.apache.commons.lang3.StringUtils;
 

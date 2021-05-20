@@ -1,4 +1,4 @@
-package com.timi.modules.user.constant;
+package com.timi.common.constant.user;
 public enum Enabled {
     YES(1),NO(0);
 

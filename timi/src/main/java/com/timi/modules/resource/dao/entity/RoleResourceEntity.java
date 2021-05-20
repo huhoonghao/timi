@@ -1,6 +1,6 @@
 package com.timi.modules.resource.dao.entity;
 
-import com.timi.common.mybatisPlus.BaseEntity;
+import com.timi.common.base.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;

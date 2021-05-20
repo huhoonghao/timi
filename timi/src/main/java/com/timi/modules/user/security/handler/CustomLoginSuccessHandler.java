@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.RedisKeyEnum;
-import com.timi.modules.user.security.utils.JwtUtils;
+import com.timi.common.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.timi.modules.user.security.utils;
+package com.timi.common.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

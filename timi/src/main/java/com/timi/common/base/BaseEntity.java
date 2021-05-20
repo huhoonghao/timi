@@ -1,4 +1,4 @@
-package com.timi.common.mybatisPlus;
+package com.timi.common.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

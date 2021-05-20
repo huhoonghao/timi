@@ -19,7 +19,7 @@ public final class ResponseBean implements Serializable {
     private transient ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1,
             0L, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<Runnable>(1),
-            r -> new Thread(r,"ResponseBean.then.executor"));
+            r -> new Thread(r,"ResponseBean1.then.executor"));
 
     private String code;
     private String message;

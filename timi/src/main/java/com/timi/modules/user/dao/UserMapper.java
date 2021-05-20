@@ -1,6 +1,6 @@
 package com.timi.modules.user.dao;
 
-import com.timi.common.mybatisPlus.TimiBaseMapper;
+import com.timi.common.base.TimiBaseMapper;
 import com.timi.modules.user.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 
