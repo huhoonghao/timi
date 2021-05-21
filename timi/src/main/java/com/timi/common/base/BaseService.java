@@ -397,6 +397,7 @@ public interface BaseService<P extends PageParam, T extends BaseEntity> {
 
         Field[] allFields = ArrayUtils.addAll(fields, superFields);
 
+        //查询ID是不是包含Table注解
         Optional<Field> idFiledOptional = Arrays.stream(allFields).filter(field -> field.isAnnotationPresent(TableId.class)).findFirst();
         //当不包含@TableId是，忽略
         if (!idFiledOptional.isPresent()) {
@@ -405,6 +406,7 @@ public interface BaseService<P extends PageParam, T extends BaseEntity> {
 
         //主键字段
         Field idField = idFiledOptional.get();
+        //设置可访问
         idField.setAccessible(true);
         //判断单一索引
         for (Field field : fields) {
@@ -413,6 +415,7 @@ public interface BaseService<P extends PageParam, T extends BaseEntity> {
                 QueryWrapper<T> wrapper = Wrappers.query();
                 Integer integer;
                 try {
+                    //获取属性值
                     Object value = getFieldValue(entity, field);
                     //如果没有指定列，默认是字段的驼峰转下划线
                     String column;

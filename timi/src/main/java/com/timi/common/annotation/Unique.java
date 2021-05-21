@@ -3,11 +3,11 @@ package com.timi.common.annotation;
 import java.lang.annotation.*;
 
 /**
- * 单一字段唯一索引校验
  *
- * @since 2021-01-12
+ * @Description: 单一字段唯一索引校验
+ * @Author hhh
+ * @Date 2021/5/21 10:36
  */
-
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
