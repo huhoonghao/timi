@@ -4,7 +4,6 @@ import java.lang.annotation.*;
 
 /**
  * 字段
- * @author lr
  * @since 2021-01-12
  */
 

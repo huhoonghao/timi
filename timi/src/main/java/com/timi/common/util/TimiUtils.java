@@ -1,5 +1,7 @@
 package com.timi.common.util;
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.timi.common.annotation.DtoSkip;
 import com.timi.common.annotation.FormatterType;
 import org.slf4j.Logger;
@@ -14,6 +16,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -29,9 +34,17 @@ public abstract class TimiUtils {
      * @return
      */
     public static String camelToUnderline(String source) {
-        return com.baomidou.mybatisplus.core.toolkit.StringUtils.camelToUnderline(source);
+        return StringUtils.camelToUnderline(source);
     }
+    /**
+     * 将对象转换为Json字符串
+     * @param object
+     * @return
+     */
+    public static String toJSONString(Object object) {
+        return JSONObject.toJSONString(object);
 
+    }
 
     /**
      * 复制集合
@@ -135,7 +148,30 @@ public abstract class TimiUtils {
         return target;
     }
 
+    /**
+     * 匹配关键字，替换成真正文本
+     */
+    public static Pattern pattern = Pattern.compile("\\$\\{(\\w+)}");
+    /**
+     * 格式化替换，如${username} is ${age} 替换成 admin is 24
+     * @param source
+     * @param map  替换参数
+     * @return
+     */
+    public static String replaceFormatString(String source, Map<String,Object> map) {
 
+        Matcher matcher = pattern.matcher(source);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            String variable = matcher.group(1);
+            Object value = map.get(variable);
+            if (value != null) {
+                matcher.appendReplacement(sb, String.valueOf(value));
+            }
+
+        }
+        return sb.toString();
+    }
 
 
 }

@@ -11,7 +11,6 @@ package com.timi.common.exception;
  * 通用模块：500-00-00001
  * business模块: 500-01-0001
  * user模块： 500-02-0001
- * @author lr
  * @since 2020-07-02
  */
 public interface ErrorCode {

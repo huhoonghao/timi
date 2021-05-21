@@ -2,10 +2,7 @@ package com.timi.common.base;
 
 import lombok.Data;
 
-/**
- * 分页参数
- */
-@Data
+
 public class PageParam {
 
     /**
@@ -30,5 +27,37 @@ public class PageParam {
     
     public int getOffset() {
         return (pageNumber - 1) * pageSize;
+    }
+
+    public Integer getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 }

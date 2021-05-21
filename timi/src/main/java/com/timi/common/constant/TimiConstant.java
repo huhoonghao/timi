@@ -19,5 +19,9 @@ public interface TimiConstant {
      * 系统分隔符
      */
     String SPLIT = ",";
+    /**
+     * 需要替换的请求标识
+     */
+    String URL_PATTERN_MARK = "${";
 
 }
