@@ -68,7 +68,7 @@ public abstract class BaseController<P extends PageParam, T extends BaseEntity, 
                 .setPages(iPage.getPages())
                 .setTotal(iPage.getTotal())
                 .setSize(iPage.getSize());
-        return ResponseBean.builder().content(pageDto).build();
+        return  ResponseBean.builder().data(pageDto).build();
     }
 
 
@@ -88,7 +88,7 @@ public abstract class BaseController<P extends PageParam, T extends BaseEntity, 
 
         //对返回值建处理
         detailResultHandler(dto);
-        ResponseBean responseBean = ResponseBean.builder().content(resultDtoHandle(dto)).build();
+        ResponseBean responseBean = ResponseBean.builder().data(resultDtoHandle(dto)).build();
         logger.info("{}根据ID查询结束，结果：{}", this.getClass().getSimpleName(), TimiUtils.toJSONString(responseBean));
         return responseBean;
     }
@@ -162,7 +162,7 @@ public abstract class BaseController<P extends PageParam, T extends BaseEntity, 
         logger.info("{}批量删除服务开始，批量参数Ids：{}", this.getClass().getSimpleName(), TimiUtils.toJSONString(ids));
         boolean deleteCount = getService().deleteByIds(ids);
 
-        ResponseBean responseBean = ResponseBean.builder().content(deleteCount).build();
+        ResponseBean responseBean = ResponseBean.builder().data(deleteCount).build();
 
         logger.info("{}批量删除服务结束，结果：{}", this.getClass().getSimpleName(), TimiUtils.toJSONString(responseBean));
         return responseBean;
@@ -205,5 +205,14 @@ public abstract class BaseController<P extends PageParam, T extends BaseEntity, 
         return list;
     }
 
+    /**
+     * 构建成功响应实例
+     *
+     * @param data
+     * @return
+     */
+    public ResponseBean responseSuccessData(Object data) {
+        return ResponseBean.builder().data(data).build();
+    }
 
 }

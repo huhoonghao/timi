@@ -23,5 +23,9 @@ public interface TimiConstant {
      * 需要替换的请求标识
      */
     String URL_PATTERN_MARK = "${";
+    /**
+     * redis分割
+     */
+    String REDIS_SPLIT = ":";
 
 }

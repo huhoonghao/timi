@@ -1,5 +1,6 @@
 package com.timi.modules.resource.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.timi.common.base.BaseEntity;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * 角色与资源关联表
  */
 @Data
+@TableName("role_resource")
 public class RoleResourceEntity extends BaseEntity implements Serializable {
 
     /**

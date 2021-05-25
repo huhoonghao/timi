@@ -58,7 +58,7 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
             //增加登录错误次数
             Long increment = cacheHelper.increment(key);
             cacheHelper.expire(key, TimeUnit.HOURS, 2L);
-            builder.content(increment);
+            builder.data(increment);
         }
         if (exception instanceof LockedException) {
             code = "500-02-0009";//用户账号被锁定

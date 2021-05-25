@@ -14,7 +14,7 @@ import java.util.List;
  *
  **/
 @Data
-@TableName("role_resource")
+@TableName("resource")
 public class ResourceEntity extends BaseEntity implements Serializable {
 
     private String resName;

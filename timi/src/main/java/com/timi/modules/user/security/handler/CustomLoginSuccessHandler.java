@@ -1,19 +1,26 @@
 package com.timi.modules.user.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.timi.common.bean.JwtBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.RedisKeyEnum;
+import com.timi.common.constant.TimiConstant;
 import com.timi.common.util.JwtUtils;
+import com.timi.common.util.TimiUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -22,17 +29,25 @@ import java.util.stream.Collectors;
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private CacheHelper cacheHelper;
-
+    @Autowired
+    private JwtBean jwtBean;
+    private Logger logger = LoggerFactory.getLogger(CustomLoginSuccessHandler.class);
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("登录成功了-------------------------->");
-        ResponseBean.Builder builder = ResponseBean.builder();
         String username = authentication.getName();
-        //该用户独有的私钥
-        String token = JwtUtils.createToken(username);
+        logger.info("{}成功登录",username);
+        ResponseBean.Builder builder = ResponseBean.builder();
 
-        //保存登录token
-        cacheHelper.hashSet(RedisKeyEnum.TOKEN_JWT_USER.getKey(), username, token);
+        //该用户独有的私钥
+        //用于标识不同的客户端，当允许多点登录时，只需要删掉Redis中uuid对应的token即可，其他点登录不影响
+        String uuid = TimiUtils.UUID();
+        String token = jwtBean.createToken(username,uuid);
+        //保存登录token,并默认两个小时
+        cacheHelper.stringSetExpire(RedisKeyEnum.USER_LOGIN_TOKEN.getKey()+ username + TimiConstant.REDIS_SPLIT + uuid, token,
+                jwtBean.getTimeOut(), TimeUnit.MINUTES);
+
+        //删除错误次数
+        cacheHelper.delete(RedisKeyEnum.USER_PASSWORD_ERROR_NUMBER.getKey() + username);
 
         //保存权限并清空旧的权限
         String[] authorities =
@@ -43,7 +58,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
                         .toArray(new String[]{});
         cacheHelper.setAdd(RedisKeyEnum.USER_AUTHORITIES.getKey() + username, authorities, true);
 
-        ResponseBean responseBean = builder.content(token).build();
+        ResponseBean responseBean = builder.data(token).build();
         responseBean.setMessage("success");
         response.getWriter().print( new ObjectMapper().writeValueAsString(responseBean));
     }

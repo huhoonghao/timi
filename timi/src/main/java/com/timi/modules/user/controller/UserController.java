@@ -10,21 +10,22 @@ import com.timi.modules.resource.service.ResourceService;
 import com.timi.modules.role.service.RoleService;
 import com.timi.modules.user.controller.dto.UserDTO;
 import com.timi.modules.user.controller.param.UserParam;
+import com.timi.modules.user.controller.param.UserPasswordParam;
 import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static org.springframework.http.codec.ServerSentEvent.builder;
 
 /**
  * @author hhh
@@ -98,9 +99,19 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
         if (StringUtils.isNotBlank(applyNo)) {
             userInfo.put("applyNo", applyNo);
         }
-        ResponseBean listResponseBean = ResponseBean.builder().content(userInfo).build();
+        ResponseBean listResponseBean = ResponseBean.builder().data(userInfo).build();
         return listResponseBean;
     }
+    /**
+     * 用户修改密码
+     * @param reqParam
+     * @return
+     */
+    @PostMapping("/updatePassword")
+    public ResponseBean updatePassword(@Validated @RequestBody UserPasswordParam reqParam){
+        return responseSuccessData(userService.updatePassword(reqParam));
+    }
+
 
 
 

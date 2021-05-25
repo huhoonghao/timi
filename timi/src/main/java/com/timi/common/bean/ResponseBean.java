@@ -1,6 +1,8 @@
 package com.timi.common.bean;
 
 
+import com.timi.common.code.ResponseCode;
+
 import java.io.Serializable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -8,33 +10,51 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
- * 响应实体
- * @since 2020-07-01
+ * 响应体封装
  */
 public final class ResponseBean implements Serializable {
+
+    public ResponseBean() {
+
+    }
 
     /**
      * 构建线程池
      */
-    private transient ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1,
+    private transient ThreadPoolExecutor executor = new ThreadPoolExecutor(2, Runtime.getRuntime().availableProcessors(),
             0L, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<Runnable>(1),
-            r -> new Thread(r,"ResponseBean1.then.executor"));
-
+            new LinkedBlockingQueue<>(1),
+            r -> new Thread(r,"ResponseBean.then.executor"));
+    /**
+     * 响应编码
+     */
     private String code;
+
+    /**
+     * 响应信息
+     */
     private String message;
+
+    /**
+     * 响应参数
+     */
     private Object[] args;
-    private Object content;
+
+    /**
+     * 响应数据
+     */
+    private Object data;
 
     private ResponseBean(Builder builder) {
         this.code = builder.code;
         this.args = builder.args;
-        this.content = builder.content;
+        this.message = builder.message;
+        this.data = builder.data;
     }
 
     /**
-     * 后续处理
-     * 修改请求参数param，param作为对象传递过去
+     * 后续异步处理
+     * 请求参数param
      *
      * @param consumer
      * @return
@@ -48,8 +68,8 @@ public final class ResponseBean implements Serializable {
     }
 
     /**
-     * 后续处理
-     * 修改请求参数param，param作为对象传递过去
+     * 后续同步处理
+     * 请求参数param
      *
      * @param consumer
      * @return
@@ -70,8 +90,9 @@ public final class ResponseBean implements Serializable {
     }
 
     public static class Builder {
-        private String code = CommonCodeEnum.RESPONSE_SUCCESS.getCode();
-        private Object content;
+        private String code = ResponseCode.SUCCESS_CODE;
+        private Object data;
+        private String message;
         private Object[] args;
 
         private Builder() {
@@ -83,18 +104,23 @@ public final class ResponseBean implements Serializable {
             return this;
         }
 
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
         public Builder args(Object[] args) {
             this.args = args;
             return this;
         }
 
-        public Builder content(Object content) {
-            this.content = content;
+        public Builder data(Object data) {
+            this.data = data;
             return this;
         }
 
-        public  ResponseBean build() {
-            return new  ResponseBean(this);
+        public ResponseBean build() {
+            return new ResponseBean(this);
         }
     }
 
@@ -110,11 +136,15 @@ public final class ResponseBean implements Serializable {
         this.message = message;
     }
 
-    public Object getContent() {
-        return content;
+    public Object getData() {
+        return data;
     }
 
 	public String getMessage() {
 		return message;
 	}
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

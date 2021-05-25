@@ -13,10 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -173,5 +170,12 @@ public abstract class TimiUtils {
         return sb.toString();
     }
 
+    /**
+     * 获取UUID去掉横杠
+     * @return
+     */
+    public static String UUID() {
+        return UUID.randomUUID().toString().replaceAll("\\-","");
+    }
 
 }
