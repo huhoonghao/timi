@@ -6,6 +6,8 @@ import com.timi.common.cache.CacheHelper;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.RedisKeyEnum;
 import com.timi.common.constant.TimiConstant;
+import com.timi.common.event.UserLoginEvent;
+import com.timi.common.util.ApplicationContextUtils;
 import com.timi.common.util.JwtUtils;
 import com.timi.common.util.TimiUtils;
 import org.slf4j.Logger;
@@ -61,5 +63,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         ResponseBean responseBean = builder.data(token).build();
         responseBean.setMessage("success");
         response.getWriter().print( new ObjectMapper().writeValueAsString(responseBean));
+        //发布登录事件
+        ApplicationContextUtils.publishEvent(new UserLoginEvent(username));
+        //发邮件 短信通知
     }
 }

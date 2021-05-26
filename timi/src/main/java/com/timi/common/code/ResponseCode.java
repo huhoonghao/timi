@@ -43,9 +43,4 @@ public final class ResponseCode {
     public static final String MULTI_RECORDS = "500-0006";
 
 
-    /**
-     * 用户token过期
-     */
-    public static final String USER_TOKEN_EXPIRED = "User.token.expired";
-
 }

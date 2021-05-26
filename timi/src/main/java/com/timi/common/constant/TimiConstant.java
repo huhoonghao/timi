@@ -31,5 +31,9 @@ public interface TimiConstant {
      * 字符集.
      */
     String CHARSET_UTF8 = "UTF-8";
+    /**
+     * 请求头
+     */
+    String Authorization = "Authorization";
 
 }

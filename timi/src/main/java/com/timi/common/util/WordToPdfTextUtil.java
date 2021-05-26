@@ -1,4 +1,4 @@
-package com.timi.modules.wordtopdf;
+package com.timi.common.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -41,14 +41,27 @@ import java.util.regex.Pattern;
  *             <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
  *         </repository>
  *     </repositories>
+ * 注意点
+ * linux 的变量路径, 如果找不到可以用 linux 的搜索命令: find / -name soffice.bin
+ * 另外, 如果在 window 中测试转换的时候出现转换慢的时候可以参考:
+ * http://blog.csdn.net/u014743697/article/details/52723524
+ * 在服务器上转换效率还可以
+ * 这个不但可以转换的文件包括: doc、docx、xls、xlsx、ppt、pptx、txt
+ * 优缺点
+ * 优点: 转换效果比较好, 支持的格式丰富
+ * 缺点
+ * 需要提前安装软件
+ * 转换效率没有 xdocreport 高
+ *
  *
  * @Author hhh
  * @Date 2021/5/26 14:24
  * @Param LIBREOFFIC_HOME_WINDOWS 软件安装地址
  * @Return
+ *
  */
 
-public class TextUtil {
+public class WordToPdfTextUtil {
 
     //LireOffice  安装目录
     private static String LIBREOFFIC_HOME_WINDOWS = "C:/Program Files/LibreOffice";

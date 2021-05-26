@@ -9,6 +9,7 @@ import com.timi.modules.user.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -104,7 +105,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 //未登录
                 .accessDeniedHandler(accessDeniedHandler())
-                //权限校验未通过处理
+                //用户认证未通过处理
                 .authenticationEntryPoint(authenticationEntryPoint())
                 .and()
                 //为了防止跨站提交攻击，通常会配置csrf。 如果不采用csrf，可禁用security的csrf csrf().disable()
@@ -113,7 +114,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/logout", "/health").permitAll()
+                .antMatchers("/login/**","/logout", "/health","/user/loginCode/**").permitAll()
+                //资源放行    这里字典请求放行
+                .mvcMatchers(HttpMethod.GET,"/dict/item/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //登录成功
