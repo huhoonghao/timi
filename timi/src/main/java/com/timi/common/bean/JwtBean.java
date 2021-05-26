@@ -93,7 +93,7 @@ public class JwtBean {
      * @Title: getTimeOut
      * @Description: 获取失效时间
      * @Author hhh
-     * @Date 2021/5/25 10:30
+     * @Date 2021/5/25 15:29
      * @Param []
      * @Return java.lang.Long
      */

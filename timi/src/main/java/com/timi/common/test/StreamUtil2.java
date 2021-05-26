@@ -20,11 +20,5 @@ public class StreamUtil2 {
         String[] strArr = { "abcd", "bcdd", "defde", "fTr" };
         List<String> strList = Arrays.stream(strArr).map(String::toUpperCase).collect(Collectors.toList());
         List<String> collect = list.stream().map(String::toUpperCase).collect(Collectors.toList());
-
     }
-
-    public static void main(String[] args) {
-        StringS();
-    }
-
 }

@@ -21,7 +21,7 @@ public final class ResponseBean implements Serializable {
     /**
      * 构建线程池
      */
-    private transient ThreadPoolExecutor executor = new ThreadPoolExecutor(2, Runtime.getRuntime().availableProcessors(),
+    private transient ThreadPoolExecutor executor = new ThreadPoolExecutor(1, Runtime.getRuntime().availableProcessors(),
             0L, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>(1),
             r -> new Thread(r,"ResponseBean.then.executor"));

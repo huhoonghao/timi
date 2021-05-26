@@ -124,11 +124,31 @@
             <version>2.2.6.RELEASE</version>
         </dependency>
 
+        <!--LireOffice 转 pdf-->
+
+        <dependency>
+            <groupId>org.artofsolving.jodconverter</groupId>
+            <artifactId>jodconverter-core</artifactId>
+            <version>3.0-NX10</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
     </dependencies>
+    <repositories>
+        <repository>
+            <id>jboss-maven2-release-repository</id>
+            <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
+
+    <!--LireOffice 转 pdf-->
 
     <build>
-
-
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -156,6 +176,5 @@
 
         </plugins>
     </build>
-
 
 </project>

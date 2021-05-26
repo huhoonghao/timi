@@ -9,6 +9,7 @@ import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -31,14 +32,13 @@ public class ApplicationContextUtils implements ApplicationContextAware {
         if (applicationEventMulticaster instanceof SimpleApplicationEventMulticaster) {
             SimpleApplicationEventMulticaster simpleApplicationEventMulticaster = (SimpleApplicationEventMulticaster) applicationEventMulticaster;
 
-            int processors = Runtime.getRuntime().availableProcessors();
             //设置异步执行
             simpleApplicationEventMulticaster
-                    .setTaskExecutor(new ThreadPoolExecutor(processors,
-                            2 * processors,
+                    .setTaskExecutor(new ThreadPoolExecutor(1,
+                            1,
                             10,
                             TimeUnit.MINUTES,
-                            new ArrayBlockingQueue<>(16 * processors, true)));
+                            new LinkedBlockingQueue<>()));
         }
     }
 

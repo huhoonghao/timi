@@ -85,7 +85,4 @@ public class StreamUtil {
         //先按version 排序 再按照ID 升序
 
     }
-    public static void main(String[] args) {
-        ListProperty();
-    }
 }

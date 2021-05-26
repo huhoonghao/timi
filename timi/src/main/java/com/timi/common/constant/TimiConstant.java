@@ -27,5 +27,9 @@ public interface TimiConstant {
      * redis分割
      */
     String REDIS_SPLIT = ":";
+    /**
+     * 字符集.
+     */
+    String CHARSET_UTF8 = "UTF-8";
 
 }
