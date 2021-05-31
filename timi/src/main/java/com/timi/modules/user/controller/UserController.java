@@ -11,6 +11,7 @@ import com.timi.modules.role.service.RoleService;
 import com.timi.modules.user.controller.dto.UserDTO;
 import com.timi.modules.user.controller.param.UserParam;
 import com.timi.modules.user.controller.param.UserPasswordParam;
+import com.timi.modules.user.controller.param.UserSignInParam;
 import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.service.UserService;
@@ -110,6 +111,16 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     @PostMapping("/updatePassword")
     public ResponseBean updatePassword(@Validated @RequestBody UserPasswordParam reqParam){
         return responseSuccessData(userService.updatePassword(reqParam));
+    }
+
+    /**
+     * 用户注册
+     * @param reqParam
+     * @return
+     */
+    @PostMapping("/signIn")
+    public ResponseBean signIn(@Validated @RequestBody UserSignInParam reqParam){
+        return responseSuccessData(userService.signIn(reqParam));
     }
 
 

@@ -1,3 +1,4 @@
+/*
 package com.timi.common.util;
 
 import org.apache.commons.io.FileUtils;
@@ -10,6 +11,7 @@ import org.springframework.util.StringUtils;
 import java.io.*;
 import java.util.regex.Pattern;
 
+*/
 /**
  *
  * @Title: word 转 PDF
@@ -59,7 +61,8 @@ import java.util.regex.Pattern;
  * @Param LIBREOFFIC_HOME_WINDOWS 软件安装地址
  * @Return
  *
- */
+ *//*
+
 
 public class WordToPdfTextUtil {
 
@@ -67,8 +70,10 @@ public class WordToPdfTextUtil {
     private static String LIBREOFFIC_HOME_WINDOWS = "C:/Program Files/LibreOffice";
     private static String LIBREOFFIC_HOME_LINUX = "/usr/bin";
     public static void main(String[] args) throws IOException {
-      /*  File input = new File("C:\\Users\\Desktop\\test.xlsx");
-        File output = new File("C:\\Users\\Desktop\\execl.pdf");*/
+      */
+/*  File input = new File("C:\\Users\\Desktop\\test.xlsx");
+        File output = new File("C:\\Users\\Desktop\\execl.pdf");*//*
+
         FileInputStream fileInputStream = new FileInputStream("D:123.doc");
         FileOutputStream fileOutputStream = new FileOutputStream("D:io.pdf");
         libreOffice2PDF(fileInputStream,fileOutputStream,"doc");
@@ -82,11 +87,13 @@ public class WordToPdfTextUtil {
         }
         return null;
     }
-    /**
+    */
+/**
      * 转换libreoffice支持的文件为pdf
      * @param inputfile 输入文件
      * @param outputfile 输出的文件
-     */
+     *//*
+
     public static void libreOffice2PDF(File inputfile, File outputfile) {
         String LibreOffice_HOME = getLibreOfficeHome();
         DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
@@ -144,12 +151,14 @@ public class WordToPdfTextUtil {
         return file;
     }
 
-    /**
+    */
+/**
      * office文件转pdf
      * @param fileInputStream 输入流
      * @param fileOutputStream 输出流
      * @param fileExt 文件后缀 doc,docx,xls,xlsx,ppt,pptx,txt
-     */
+     *//*
+
     public static void libreOffice2PDF(FileInputStream fileInputStream, FileOutputStream fileOutputStream,String fileExt) throws IOException {
         if(StringUtils.isEmpty(fileExt)){
             throw new RuntimeException("error.fileExt" + fileExt);
@@ -190,3 +199,4 @@ public class WordToPdfTextUtil {
         fileOutputStream.write(bytes);
     }
 }
+*/

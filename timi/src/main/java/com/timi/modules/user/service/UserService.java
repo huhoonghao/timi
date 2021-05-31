@@ -3,6 +3,7 @@ package com.timi.modules.user.service;
 import com.timi.common.base.BaseService;
 import com.timi.modules.user.controller.param.UserParam;
 import com.timi.modules.user.controller.param.UserPasswordParam;
+import com.timi.modules.user.controller.param.UserSignInParam;
 import com.timi.modules.user.entity.UserEntity;
 
 /**
@@ -24,5 +25,7 @@ public interface UserService  extends BaseService<UserParam,UserEntity> {
      * @Return java.lang.Boolean
      */
     Boolean updatePassword(UserPasswordParam requestParam);
+
+    Boolean signIn(UserSignInParam reqParam);
     
 }
