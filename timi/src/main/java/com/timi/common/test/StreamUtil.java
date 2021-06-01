@@ -46,7 +46,7 @@ public class StreamUtil {
             baseEntity.setId(1L+i);
             baseEntity.setCreateBy("hhh");
             baseEntity.setUpdateBy("");
-            baseEntity.setVersion(100L+i);
+            baseEntity.setVersion(100+i);
             baseEntityList.add(baseEntity);
         }
 
@@ -61,7 +61,7 @@ public class StreamUtil {
         // 求总数
         Long count = baseEntityList.stream().collect(Collectors.counting());
         //求最大
-        baseEntityList.stream().map(BaseEntity::getVersion).collect(Collectors.maxBy(Long::compare));
+        baseEntityList.stream().map(BaseEntity::getVersion).collect(Collectors.maxBy(Integer::compare));
         //求平均
         baseEntityList.stream().collect(Collectors.averagingLong(BaseEntity::getVersion));
         //求和
@@ -70,7 +70,7 @@ public class StreamUtil {
         //版本号是否大于2的分组
         Map<Boolean, List<BaseEntity>> map = baseEntityList.stream().collect(Collectors.partitioningBy(x -> x.getVersion() > 2));
         System.out.println("版本号是否大于2的分组"+map);
-        Map<String, Map<Long, List<BaseEntity>>> collect1 = baseEntityList.stream().collect(Collectors.groupingBy(x -> x.getCreateBy(), Collectors.groupingBy(y -> y.getVersion())));
+        Map<String, Map<Integer, List<BaseEntity>>> collect1 = baseEntityList.stream().collect(Collectors.groupingBy(x -> x.getCreateBy(), Collectors.groupingBy(y -> y.getVersion())));
         System.out.println("将员工先按性别分组，再按地区分组"+collect1);
         //排序升序
         List<BaseEntity> collect2 = baseEntityList.stream().sorted(Comparator.comparing(BaseEntity::getVersion)).collect(Collectors.toList());

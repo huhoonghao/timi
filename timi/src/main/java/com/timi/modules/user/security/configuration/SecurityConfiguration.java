@@ -117,7 +117,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login/**","/logout", "/health","/user/loginCode/**").permitAll()
+                .antMatchers("/login/**","/logout", "/health","/user/loginCode/**","/user/signIn/send","/user/signIn").permitAll()
                 //资源放行    这里字典请求放行
                 .mvcMatchers(HttpMethod.GET,"/dict/item/**").permitAll()
                 .anyRequest().authenticated()

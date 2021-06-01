@@ -104,16 +104,17 @@ public class UserSerivceImpl implements UserService {
         validatorParam(reqParam);
         LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getPhone, reqParam.getPhone());
         UserEntity userEntity = userMapper.selectOne(queryWrapper);
-        TimiAssert.notNull(userEntity,BusinessResponse.REGISTERED);
+        TimiAssert.isTrue(userEntity!=null,BusinessResponse.REGISTERED);
         //设置密码保存数据
-        String md5Pwd = MD5Util.encryptBySalt(reqParam.getPassword());
-        String pwd = SecurityUtils.getPassword(md5Pwd);
+        //String md5Pwd = MD5Util.encryptBySalt(reqParam.getPassword());
+        String pwd = SecurityUtils.getPassword(reqParam.getPassword());
         reqParam.setPassword(pwd);
         UserEntity entity=new UserEntity();
         BeanUtils.copyProperties(reqParam, entity);
         entity.setAccountNonExpired(Enabled.YES.getValue());
         entity.setCredentialsNonExpired(Enabled.YES.getValue());
         entity.setAccountLocked(Enabled.NO.getValue());
+        entity.setEnabled(Enabled.YES.getValue());
         // 验证码
         String redisCode = cacheHelper.stringGet(RedisKeyEnum.USER_SIG_NIN_CODE.getKey() + entity.getPhone());
         //然后和redis做比较
