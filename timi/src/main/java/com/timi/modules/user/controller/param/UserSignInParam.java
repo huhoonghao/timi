@@ -26,4 +26,7 @@ public class UserSignInParam implements Serializable {
     private String phone;
 
     private String nickname;
+
+    //验证码
+    private String SignInCode;
 }

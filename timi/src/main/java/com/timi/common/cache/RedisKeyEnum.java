@@ -39,7 +39,13 @@ public enum RedisKeyEnum {
     /**
      * 系统登录token
      */
-    USER_LOGIN_TOKEN ("system:login:token:", "系统登录token");
+    USER_LOGIN_TOKEN ("timi:login:token:", "登录token"),
+
+
+    /**
+     * 注册验证码
+     */
+    USER_SIG_NIN_CODE ("timi:sms:code:", "注册验证码");
 
     public String key;
     public String message;

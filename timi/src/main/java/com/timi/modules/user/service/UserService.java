@@ -26,6 +26,15 @@ public interface UserService  extends BaseService<UserParam,UserEntity> {
      */
     Boolean updatePassword(UserPasswordParam requestParam);
 
-    Boolean signIn(UserSignInParam reqParam);
+    UserEntity signIn(UserSignInParam reqParam);
+
+    /**
+     * 通过用户名获取用户信息
+     * @param username
+     * @return
+     */
+    UserEntity getUserByUsername(String username);
+
+    Boolean signInSendCode(String phone);
     
 }

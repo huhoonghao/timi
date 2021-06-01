@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * JWT工具类
- * @author lr
- * @since 2021-01-09
+ *
+ * @Title: JWT工具类
+ * @Description:
  */
 @Component
 public class JwtBean {
@@ -68,7 +68,6 @@ public class JwtBean {
      */
     public String createToken(String username, String uuid) {
         String token = JWT.create()
-//                .withExpiresAt(GaeaDateUtils.toDate(LocalDateTime.now().plusHours(4)))
                 .withClaim("username", username)
                 .withClaim("uuid", uuid)
                 .sign(Algorithm.HMAC256(timiProperties.getSecurity().getJwtSecret()));

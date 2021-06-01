@@ -15,9 +15,11 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 缓存帮助类
  *
- * @since 2020-06-20
+ * @Title: 缓存帮助类
+ * @Description:
+ * @Author hhh
+ * @Date 2021/5/31 14:16
  */
 @Component
 public class CacheHelper {
@@ -25,12 +27,13 @@ public class CacheHelper {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-
     /**
-     * 获取指定key的String类型缓存
-     *
-     * @param key
-     * @return
+     * @Title: stringGet
+     * @Description: 获取指定key的String类型缓存
+     * @Author hhh
+     * @Date 2021/5/31 14:17
+     * @Param [key]
+     * @Return java.lang.String
      */
     public String stringGet(String key) {
         String regKey = regKey(key);
@@ -42,17 +45,18 @@ public class CacheHelper {
     }
 
     /**
-     * 获取指定key的String类型缓存
      *
-     * @param key
-     * @return
+     * @Title:
+     * @Description: set String
+     * @Author hhh
+     * @Date 2021/5/31 14:17
+     * @Param
+     * @Return
      */
     public Boolean setIfAbsent(String key, String value) {
         String regKey = regKey(key);
         if (StringUtils.isBlank(regKey)) {
             return false;
-
-
         }
         BoundValueOperations<String, String> operations = stringRedisTemplate.boundValueOps(regKey);
 
@@ -62,7 +66,6 @@ public class CacheHelper {
 
     /**
      * 增加1
-     *
      * @param key
      * @return
      */
@@ -73,7 +76,6 @@ public class CacheHelper {
 
     /**
      * 设置失效时间
-     *
      * @param key
      * @param timeUnit
      * @param timeout
@@ -84,7 +86,6 @@ public class CacheHelper {
 
     /**
      * 增加1
-     *
      * @param key
      * @return
      */
@@ -95,7 +96,6 @@ public class CacheHelper {
 
     /**
      * 是否存在指定KEY
-     *
      * @param key
      * @return
      */

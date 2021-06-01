@@ -1,20 +1,21 @@
 package com.timi.modules.user.security.handler;
 
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
 import com.timi.common.code.UserResponseCode;
 import com.timi.common.constant.user.Enabled;
+import com.timi.common.event.EventEnum;
+import com.timi.common.event.UserApplicationEvent;
 import com.timi.modules.user.dao.UserMapper;
 import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -30,10 +31,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 登录成功
+ * 登录失败
  */
+@Slf4j
 public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
-    private Logger logger = LoggerFactory.getLogger(CustomLoginFailureHandler.class);
     @Autowired
     private CacheHelper cacheHelper;
     @Autowired
@@ -41,6 +42,9 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
 
     /**
@@ -52,11 +56,10 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String username = UserContentHolder.getContext().getUsername();
-        logger.debug("------------------{}登录失败--------------------",username);
-
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().print( "login is fail");
+        log.debug("------------------{}登录失败--------------------",username);
 
         String code = UserResponseCode.USER_TOKEN_EXPIRED;
         String key =null ;
@@ -77,24 +80,20 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
             //错误大于5次，账户锁定,发出锁定事件
             Integer errorTimes = Integer.parseInt(cacheHelper.stringGet(key));
-            //大于指定次数默认3次，显示验证码
+            log.debug("错误次数{}",errorTimes);
             builder.data(result);
         }
         if (exception instanceof LockedException) {
             code = "500-02-0009";//用户账号被锁定
         }
+
         //账户密码已经被锁定
         if (StringUtils.isNotEmpty(cacheHelper.stringGet(key)) && Long.parseLong(cacheHelper.stringGet(key)) >= 5L) {
             //修改状态
-            UserEntity byUsername = userService.findByUsername(username);
-            UserEntity userEntity =new UserEntity();
-            userEntity.setId(byUsername.getId());
-            userEntity.setAccountLocked(Enabled.YES.getValue());
-            userMapper.updateById(userEntity);
+            applicationContext.publishEvent(new UserApplicationEvent(username, EventEnum.LOCKED));
         }
         ResponseBean responseBean = builder.code(code).build();
-        responseBean.setMessage("--------------------登录失败-----------------------");
-       // responseBean.setMessage(messageSourceHolder.getMessage(code));
+        responseBean.setMessage("---登录失败---------->");
         response.getWriter().print( new ObjectMapper().writeValueAsString(responseBean));
 
     }

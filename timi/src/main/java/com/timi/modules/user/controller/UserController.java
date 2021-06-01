@@ -16,7 +16,9 @@ import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -121,6 +123,11 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     @PostMapping("/signIn")
     public ResponseBean signIn(@Validated @RequestBody UserSignInParam reqParam){
         return responseSuccessData(userService.signIn(reqParam));
+    }
+    @PostMapping("/signIn/send")
+    public ResponseBean sendSignInCode(@RequestParam("phone") String phone){
+        return responseSuccessData(userService.signInSendCode(phone));
+
     }
 
 

@@ -21,9 +21,11 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 /**
- * security 安全配置
+ * @Title:
+ * @Description:  security 安全配置
+ * @Author hhh
+ * @Date 2021/5/31 14:18
  */
 @Configuration
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
@@ -31,22 +33,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
     /**
-     * 自定义，从数据库获取用户信息
-     *
-     * @return
+     * @Title: apUserDetailsService
+     * @Description: 自定义，从数据库获取用户信息
+     * @Author hhh
+     * @Date 2021/5/31 14:19
+     * @Return org.springframework.security.core.userdetails.UserDetailsService
      */
     @Bean
     public UserDetailsService apUserDetailsService() {
         return new CustomUserDetailsService();
     }
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     /**
      * 自定义userDetailService
-     *
      * @param auth
      * @throws Exception
      */
@@ -55,6 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      /*   //未加密解密
         auth.userDetailsService(apUserDetailsService())
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());*/
+        //已密码加密
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }

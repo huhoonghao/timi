@@ -63,6 +63,7 @@ public class TimiProperties {
         private boolean permitAll = false;
 
 
+
         public boolean isPermitAll() {
             return permitAll;
         }
