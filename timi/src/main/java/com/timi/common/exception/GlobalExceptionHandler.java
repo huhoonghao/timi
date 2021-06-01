@@ -5,7 +5,9 @@ import com.timi.common.code.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -39,6 +41,26 @@ public class GlobalExceptionHandler {
             responseBean.setMessage(messageSource.getMessage(ResponseCode.FAIL_CODE, null, LocaleContextHolder.getLocale()));
         }
         return responseBean;
+    }
+
+
+    /**
+     * 参数校验异常
+     *
+     * @param methodArgumentNotValidException
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseBean methodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException) {
+        String code = methodArgumentNotValidException.getBindingResult().getFieldError().getDefaultMessage();
+        String message;
+        try {
+
+            message = messageSource.getMessage(code, null,LocaleContextHolder.getLocale());
+        } catch (NoSuchMessageException exception) {
+            message = code;
+        }
+        return ResponseBean.builder().code(ResponseCode.FAIL_CODE).message(message).build();
     }
 
 }
