@@ -6,6 +6,8 @@ import com.timi.common.base.BaseService;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
+import com.timi.common.event.EventEnum;
+import com.timi.common.event.UserApplicationEvent;
 import com.timi.common.util.MD5Util;
 import com.timi.modules.resource.service.ResourceService;
 import com.timi.modules.role.service.RoleService;
@@ -20,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +53,6 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     private ResourceService resourceService;
     @Autowired
     private CacheHelper cacheHelper;
-
     @Override
     public BaseService<UserParam, UserEntity> getService() {
         return userService;

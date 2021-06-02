@@ -8,10 +8,12 @@ import com.timi.modules.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 /**
  * 监听用户事件
  */
+@Component
 @Slf4j
 public class UserEventListener implements ApplicationListener<UserApplicationEvent> {
 

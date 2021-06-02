@@ -31,4 +31,5 @@ public class UserApplicationEvent extends ApplicationEvent {
     public EventEnum getEventEnum() {
         return eventEnum;
     }
+
 }
