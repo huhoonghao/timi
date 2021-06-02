@@ -72,28 +72,29 @@ public class UserSerivceImpl implements UserService {
         //参数校验
         if (!requestParam.getConfirmPassword().equals(requestParam.getPassword())) {
             //密码和确认密码不一致
-            throw BusinessExceptionBuilder.build(RespCommonCode.AUTH_PASSWORD_NOTSAME);
+            throw BusinessExceptionBuilder.build(BusinessResponse.PASSWORDS_ARE_DIFFERENT);
         }
-
         //新密码不能与老密码一样
         if (StringUtils.equals(requestParam.getOldPassword(), requestParam.getPassword())) {
-            throw BusinessExceptionBuilder.build(RespCommonCode.USER_PASSWORD_CONFIG_PASSWORD_CANOT_EQUAL);
+            throw BusinessExceptionBuilder.build(BusinessResponse.USER_PASSWORD_CONFIG_PASSWORD_CANT_EQUAL);
         }
-        String password = SecurityUtils.getPassword(requestParam.getPassword());
-        String oldPassword = SecurityUtils.getPassword(requestParam.getOldPassword());
-        String username = UserContentHolder.getContext().getUsername();
 
-        //SELECT id,password FROM user WHERE (username = ?)
+        //根据账号查询出用户
         LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(UserEntity::getId, UserEntity::getPassword)
-                .eq(UserEntity::getUsername, username);
+                .eq(UserEntity::getUsername, requestParam.getUsername());
         UserEntity user = userMapper.selectOne(queryWrapper);
+        TimiAssert.isTrue(user==null,BusinessResponse.OLD_PASSWORD_ERROR);
 
-
-        if (SecurityUtils.matches(user.getPassword(), oldPassword)) {
-            throw BusinessExceptionBuilder.build(RespCommonCode.OLD_PASSWORD_ERROR);
+        //比较用户输入的密码是不是正确的-
+        if (SecurityUtils.matches(user.getPassword(), SecurityUtils.getPassword(requestParam.getPassword()))) {
+            throw BusinessExceptionBuilder.build(BusinessResponse.OLD_PASSWORD_ERROR);
         }
-        user.setPassword(password);
+        //新密码加盐
+        String md5Pwd = MD5Util.encryptBySalt(requestParam.getPassword());
+        //新密码加密
+        String newPassword = SecurityUtils.getPassword(md5Pwd);
+        user.setPassword(newPassword);
         int flag = userMapper.updateById(user);
         //返回结果
         return flag > 0;
@@ -106,8 +107,8 @@ public class UserSerivceImpl implements UserService {
         UserEntity userEntity = userMapper.selectOne(queryWrapper);
         TimiAssert.isTrue(userEntity!=null,BusinessResponse.REGISTERED);
         //设置密码保存数据
-        //String md5Pwd = MD5Util.encryptBySalt(reqParam.getPassword());
-        String pwd = SecurityUtils.getPassword(reqParam.getPassword());
+        String md5Pwd = MD5Util.encryptBySalt(reqParam.getPassword());
+        String pwd = SecurityUtils.getPassword(md5Pwd);
         reqParam.setPassword(pwd);
         UserEntity entity=new UserEntity();
         BeanUtils.copyProperties(reqParam, entity);

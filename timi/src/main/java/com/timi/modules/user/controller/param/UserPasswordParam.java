@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @Data
 public class UserPasswordParam  implements Serializable {
+    @NotBlank(message = "userName not empty")
     private String username;
     /**
      * 新密码

@@ -11,7 +11,7 @@ public final class MD5Util {
 
     private static MD5Util md5Util = null;
 
-    private static final String MD5_SALT = "gaea";
+    private static final String MD5_SALT = "timi";
 
     public static synchronized MD5Util getInstance() {
 
@@ -66,6 +66,20 @@ public final class MD5Util {
             e.printStackTrace();
         }
         return "";
+    }
+
+/**
+ *
+ * @Title:
+ * @Description:   登录之前先把自己的密码加盐  用生成的密码登录
+ * @Author hhh
+ * @Date 2021/6/2 10:54
+ * @Param
+ * @Return
+ */
+    public static void main(String[] args) {
+        System.out.println( encryptBySalt("liyongsheng123"));
+
     }
 
 

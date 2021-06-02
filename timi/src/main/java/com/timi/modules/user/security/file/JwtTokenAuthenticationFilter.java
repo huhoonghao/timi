@@ -69,7 +69,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             //当token为空或过期时，未登录
             if(StringUtils.isBlank(token) || cacheHelper.exist(RedisKeyEnum.TOKEN_JWT_EXPIRE.getKey() + token)) {
                 filterChain.doFilter(request, response);
-                System.out.println("-----------------------------------------------------------------");
                 return;
             }
             //从token中解析出用户名

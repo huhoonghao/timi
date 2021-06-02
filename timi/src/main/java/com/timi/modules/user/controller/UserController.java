@@ -6,6 +6,7 @@ import com.timi.common.base.BaseService;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
+import com.timi.common.util.MD5Util;
 import com.timi.modules.resource.service.ResourceService;
 import com.timi.modules.role.service.RoleService;
 import com.timi.modules.user.controller.dto.UserDTO;
@@ -127,6 +128,13 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     @PostMapping("/signIn/send")
     public ResponseBean sendSignInCode(@RequestParam("phone") String phone){
         return responseSuccessData(userService.signInSendCode(phone));
+
+    }
+
+    //线上需要注释掉
+    @GetMapping("/getPassWord")
+    public ResponseBean getPassWord(@RequestParam("passWord") String passWord){
+        return responseSuccessData(MD5Util.encryptBySalt(passWord));
 
     }
 
