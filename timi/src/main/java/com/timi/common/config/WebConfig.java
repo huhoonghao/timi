@@ -9,8 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * flowable静态资源拦截
- * @author lir
- * @since 2020-07-27
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
