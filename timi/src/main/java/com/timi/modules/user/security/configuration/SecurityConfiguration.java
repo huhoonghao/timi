@@ -1,15 +1,13 @@
 package com.timi.modules.user.security.configuration;
 
 import com.timi.modules.user.security.file.JwtTokenAuthenticationFilter;
-import com.timi.modules.user.security.handler.CustomAccessDeniedHandler;
-import com.timi.modules.user.security.handler.CustomLoginFailureHandler;
-import com.timi.modules.user.security.handler.CustomLoginSuccessHandler;
-import com.timi.modules.user.security.handler.TimiAuthenticationEntryPoint;
+import com.timi.modules.user.security.handler.*;
 import com.timi.modules.user.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -54,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-     /*   //未加密解密
+     /*   //明文
         auth.userDetailsService(apUserDetailsService())
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());*/
         //已密码加密
@@ -100,7 +98,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new TimiAuthenticationEntryPoint();
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

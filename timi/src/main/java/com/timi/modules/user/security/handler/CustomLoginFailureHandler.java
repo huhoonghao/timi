@@ -4,18 +4,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
+import com.timi.common.code.RespCommonCode;
 import com.timi.common.code.UserResponseCode;
-import com.timi.common.constant.user.Enabled;
 import com.timi.common.event.EventEnum;
 import com.timi.common.event.UserApplicationEvent;
 import com.timi.modules.user.dao.UserMapper;
-import com.timi.modules.user.entity.UserEntity;
-import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -45,6 +45,8 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private MessageSource messageSource;
 
 
     /**
@@ -55,19 +57,18 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        String username = UserContentHolder.getContext().getUsername();
+        String username = request.getParameter("username");
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().print( "login is fail");
         log.debug("------------------{}登录失败--------------------",username);
 
-        String code = UserResponseCode.USER_TOKEN_EXPIRED;
+        String code = RespCommonCode.LOGIN_FAILED;
         String key =null ;
         ResponseBean.Builder builder = ResponseBean.builder();
 
         if (exception instanceof BadCredentialsException) {
 
-            code = UserResponseCode.USER_PASSWORD_ERROR;
             key = RedisKeyEnum.USER_PASSWORD_ERROR_NUMBER.getKey() + username;
             //增加登录错误次数
             Long increment = cacheHelper.increment(key);
@@ -83,18 +84,24 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
             log.debug("错误次数{}",errorTimes);
             builder.data(result);
         }
+        //初始化message
+        String message=messageSource.getMessage(RespCommonCode.LOGIN_FAILED, null, LocaleContextHolder.getLocale());
         if (exception instanceof LockedException) {
-            code = "500-02-0009";//用户账号被锁定
+            code = RespCommonCode.ACCOUNT_FREEZE;//用户账号被锁定
         }
 
         //账户密码已经被锁定
         if (StringUtils.isNotEmpty(cacheHelper.stringGet(key)) && Long.parseLong(cacheHelper.stringGet(key)) >= 5L) {
+             code = RespCommonCode.ACCOUNT_FREEZE;//用户账号被锁定
+             message=messageSource.getMessage(RespCommonCode.ACCOUNT_FREEZE, null, LocaleContextHolder.getLocale());
             //修改状态
             applicationContext.publishEvent(new UserApplicationEvent(username, EventEnum.LOCKED));
         }
         ResponseBean responseBean = builder.code(code).build();
-        responseBean.setMessage("---登录失败---------->");
+
+        responseBean.setMessage(message);
         response.getWriter().print( new ObjectMapper().writeValueAsString(responseBean));
 
     }
+
 }

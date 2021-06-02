@@ -54,5 +54,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         ApplicationContextUtils.publishEvent(new UserLoginEvent(username));
         //发邮件 短信通知
 
+
     }
 }
