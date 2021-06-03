@@ -16,5 +16,6 @@ public class RespCommonCode {
      */
     public static final String LOGIN_FAILED = "1001";
     public static final String ACCOUNT_FREEZE = "1002";
+    public static final String USER_DISABLED_ERROR = "1003";
 
 }
