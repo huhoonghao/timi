@@ -2,6 +2,7 @@ package com.timi.common.base;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.timi.common.annotation.TimiLog;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.util.TimiUtils;
 import com.timi.modules.user.holder.UserContentHolder;
@@ -53,6 +54,7 @@ public abstract class BaseController<P extends PageParam, T extends BaseEntity, 
      * @param param
      * @return
      */
+    @TimiLog(pageTitle = "查询")
     @GetMapping("/pageList")
     public ResponseBean pageList(P param) {
         logger.info("入参{}",param);
