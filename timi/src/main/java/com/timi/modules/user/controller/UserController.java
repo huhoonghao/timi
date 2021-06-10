@@ -1,15 +1,12 @@
 package com.timi.modules.user.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
-import com.timi.common.annotation.TestAop;
 import com.timi.common.annotation.TimiLog;
 import com.timi.common.base.BaseController;
 import com.timi.common.base.BaseService;
 import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
-import com.timi.common.event.EventEnum;
-import com.timi.common.event.UserApplicationEvent;
 import com.timi.common.util.MD5Util;
 import com.timi.modules.resource.service.ResourceService;
 import com.timi.modules.role.service.RoleService;
@@ -20,14 +17,9 @@ import com.timi.modules.user.controller.param.UserSignInParam;
 import com.timi.modules.user.entity.UserEntity;
 import com.timi.modules.user.holder.UserContentHolder;
 import com.timi.modules.user.service.UserService;
-import javafx.scene.control.TableRow;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,6 +74,8 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
 
     @GetMapping("/queryLog")
     public UserEntity testLog(UserEntity userEntity){
+
+       // userEntity.getCreateTime().toString();
         UserEntity user = userService.getUser();
         return user;
     }

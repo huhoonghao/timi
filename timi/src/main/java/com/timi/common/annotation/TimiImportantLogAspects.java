@@ -40,15 +40,14 @@ import java.util.Map;
  */
 @Slf4j
 @Aspect
-public class TimiLogAspects {
-    @Resource(name = "timiLogProperties")
+public class TimiImportantLogAspects {
+    @Autowired
     private TimiLogProperties timiLogProperties;
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Resource(name = "logRestTemplate")
     private RestTemplate restTemplate;
-    //@Pointcut("execution(* com..*Controller.*(..))")
     @Pointcut("@annotation(com.timi.common.annotation.TimiLog)")
     public void logPointCut() {
     }
