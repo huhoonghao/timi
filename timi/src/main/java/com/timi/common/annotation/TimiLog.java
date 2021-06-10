@@ -6,8 +6,9 @@ import java.lang.annotation.*;
  * @author hhh
  * @date 2021/5/27
  */
+
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Documented
 public @interface TimiLog {
     /**

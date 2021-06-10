@@ -41,17 +41,18 @@ import java.util.Map;
 @Slf4j
 @Aspect
 public class TimiLogAspects {
-    @Autowired
+    @Resource(name = "timiLogProperties")
     private TimiLogProperties timiLogProperties;
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Resource(name = "logRestTemplate")
     private RestTemplate restTemplate;
-
+    //@Pointcut("execution(* com..*Controller.*(..))")
     @Pointcut("@annotation(com.timi.common.annotation.TimiLog)")
     public void logPointCut() {
     }
+
     //配置织入点
 
     @AfterReturning(pointcut = "logPointCut()", returning = "jsonResult")
@@ -64,39 +65,41 @@ public class TimiLogAspects {
     }
 
     protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult) throws Exception {
+        log.info("开始执行------------------------------>");
         try {  // 获得注解
             TimiLog controllerLog = getAnnotationLog(joinPoint);
             if (null == controllerLog) {
                 return;
             }
             
-            TimiLogEntity operLog = new TimiLogEntity();
+            TimiLogEntity entity = new TimiLogEntity();
 
             // 返回参数
             if (jsonResult != null) {
-                operLog.setResponseParam(JSONObject.toJSONString(jsonResult));
+                entity.setResponseParam(JSONObject.toJSONString(jsonResult));
             }
             if (e != null) {
-                operLog.setResponseParam(e.getMessage());
+                entity.setResponseParam(e.getMessage());
             }
             //设置url
             HttpServletRequest request = getRequest();
-            operLog.setUserName(UserContentHolder.getContext().getUsername());
-            operLog.setRequestUrl(request.getRequestURI());
+            entity.setUserName(UserContentHolder.getContext().getUsername());
+            entity.setRequestUrl(request.getRequestURI());
             // 设置请求方式
-            operLog.setRequestMethod(request.getMethod());
-            operLog.setRequestTime(new Date());
+            entity.setRequestMethod(request.getMethod());
+            entity.setRequestTime(new Date());
             //获取ip
-            operLog.setSourceIp(request.getHeader("sourceIp"));
+            log.info("IP                 : {}", request.getRemoteAddr());
+            entity.setSourceIp(request.getHeader("sourceIp"));
             // 处理设置注解上的参数
-            getControllerMethodDescription(joinPoint, controllerLog, operLog);
-            log.info("--gaeaLog:requestUrl--{}", operLog.getRequestUrl());
-            log.info("--gaeaLog:requestData--{}", operLog.getRequestParam());
-            log.info("--gaeaLog:requestAllData--{}", JSON.toJSONString(operLog));
+            getControllerMethodDescription(joinPoint, controllerLog, entity);
+            log.info("--gaeaLog:requestUrl--{}", entity.getRequestUrl());
+            log.info("--gaeaLog:requestData--{}", entity.getRequestParam());
+            log.info("--gaeaLog:requestAllData--{}", JSON.toJSONString(entity));
             //执行回调
             if (!StringUtils.isEmpty(timiLogProperties.getCallbackUrl())) {
                 threadPoolTaskExecutor.execute(() -> {
-                    restTemplateCallback(operLog, request);
+                    restTemplateCallback(entity, request);
                 });
             }
         } catch (Exception exp) {
@@ -132,19 +135,19 @@ public class TimiLogAspects {
      * 获取注解中对方法的描述信息 用于Controller层注解
      *
      * @param log     日志
-     * @param operLog 操作日志
+     * @param entity 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, TimiLog log, TimiLogEntity operLog) throws Exception {
+    public void getControllerMethodDescription(JoinPoint joinPoint, TimiLog log, TimiLogEntity entity) throws Exception {
         // 设置标题
-        operLog.setPageTitle(log.pageTitle());
+        entity.setPageTitle(log.pageTitle());
         // 是否需要保存request，参数和值
         if (log.isSaveRequestData()) {
             //  ，传入到数据库中。
-            setRequestValue(joinPoint, operLog);
+            setRequestValue(joinPoint, entity);
         }
         if (!log.isSaveResponseData()) {
-            operLog.setResponseParam(null);
+            entity.setResponseParam(null);
         }
     }
 
@@ -152,21 +155,21 @@ public class TimiLogAspects {
     /**
      * 获取请求的参数，放到log中
      *
-     * @param operLog 操作日志
+     * @param entity 操作日志
      * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, TimiLogEntity operLog) throws Exception {
-        String requestMethod = operLog.getRequestMethod();
+    private void setRequestValue(JoinPoint joinPoint, TimiLogEntity entity) throws Exception {
+        String requestMethod = entity.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
-            operLog.setRequestParam(params);
+            entity.setRequestParam(params);
         } else if (HttpMethod.GET.name().equals(requestMethod)) {
             Map<String, String[]> paramMap = getRequest().getParameterMap();
-            operLog.setRequestParam(JSON.toJSONString(paramMap));
+            entity.setRequestParam(JSON.toJSONString(paramMap));
         } else {
             Map<?, ?> paramsMap = (Map<?, ?>) getRequest().getAttribute("HandlerMapping" + ".uriTemplateVariables");
             if (null != paramsMap) {
-                operLog.setRequestParam(paramsMap.toString());
+                entity.setRequestParam(paramsMap.toString());
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.timi.modules.user.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.timi.common.annotation.TestAop;
 import com.timi.common.annotation.TimiLog;
 import com.timi.common.base.BaseController;
 import com.timi.common.base.BaseService;
@@ -69,7 +70,7 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
         return new UserEntity();
     }
 
-
+    @TimiLog(pageTitle = "查询")
     @GetMapping("/query")
     public UserEntity test(){
         String supperUserName = applicationContext.getEnvironment().getProperty("supperUserName");
@@ -79,7 +80,6 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
         return user;
     }
 
-    @TimiLog(pageTitle = "查询")
     @GetMapping("/queryLog")
     public UserEntity testLog(UserEntity userEntity){
         UserEntity user = userService.getUser();
