@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * 审计日志属性
- * @author lr
- * @since 2021-01-20
  */
 @Component
 @ConfigurationProperties(prefix ="spring.timi.audit-log")

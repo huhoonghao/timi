@@ -46,7 +46,7 @@ public class TimiImportantLogAspects {
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
-    @Resource(name = "logRestTemplate")
+    @Resource(name = "restTemplate")
     private RestTemplate restTemplate;
     @Pointcut("@annotation(com.timi.common.annotation.TimiLog)")
     public void logPointCut() {
