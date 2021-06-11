@@ -8,6 +8,7 @@ import com.timi.common.bean.ResponseBean;
 import com.timi.common.cache.CacheHelper;
 import com.timi.common.cache.RedisKeyEnum;
 import com.timi.common.util.MD5Util;
+import com.timi.common.util.TimiEmailSend;
 import com.timi.modules.resource.service.ResourceService;
 import com.timi.modules.role.service.RoleService;
 import com.timi.modules.user.controller.dto.UserDTO;
@@ -23,10 +24,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.http.codec.ServerSentEvent.builder;
 
@@ -49,6 +47,8 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     private ResourceService resourceService;
     @Autowired
     private CacheHelper cacheHelper;
+    @Autowired
+    private TimiEmailSend timiEmailSend;
     @Override
     public BaseService<UserParam, UserEntity> getService() {
         return userService;
@@ -141,6 +141,17 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     @GetMapping("/getPassWord")
     public ResponseBean getPassWord(@RequestParam("passWord") String passWord){
         return responseSuccessData(MD5Util.encryptBySalt(passWord));
+
+    }
+
+    //线上需要注释掉
+    @GetMapping("/testEmail")
+    public ResponseBean testEmail(){
+        List<String> li=new ArrayList();
+        li.add("1398981989@qq.com");
+        timiEmailSend.sendMail("https://mail.anji-ceva.com/ews/exchange.asmx","huhonghao@anji-plus.com","P@ss1234",li,null,"test","123",null);
+
+        return responseSuccessData(userService.signInSendCode(null));
 
     }
 
