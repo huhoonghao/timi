@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.timi.common.config.TimiLogProperties;
 import com.timi.common.constant.TimiConstant;
+import com.timi.modules.log.controller.dto.TimiLogDTO;
 import com.timi.modules.log.entity.TimiLogEntity;
 import com.timi.modules.user.holder.UserContentHolder;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +33,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.Date;
 import java.util.Map;
 
@@ -60,11 +63,12 @@ public class TimiImportantLogAspects {
     }
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) throws Exception {
+        log.info("=====================出现异常{}============================",e.toString());
         handleLog(joinPoint, e, null);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult) throws Exception {
-        log.info("开始执行------------------------------>");
+    protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult)  {
+
         try {  // 获得注解
             TimiLog controllerLog = getAnnotationLog(joinPoint);
             if (null == controllerLog) {
@@ -84,17 +88,14 @@ public class TimiImportantLogAspects {
             HttpServletRequest request = getRequest();
             entity.setUserName(UserContentHolder.getContext().getUsername());
             entity.setRequestUrl(request.getRequestURI());
+            log.info("==================After日志入库开始{}方法===================",request.getRequestURI());
             // 设置请求方式
             entity.setRequestMethod(request.getMethod());
             entity.setRequestTime(new Date());
             //获取ip
-            log.info("IP                 : {}", request.getRemoteAddr());
-            entity.setSourceIp(request.getHeader("sourceIp"));
+            entity.setSourceIp(request.getRemoteAddr());
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, entity);
-            log.info("--gaeaLog:requestUrl--{}", entity.getRequestUrl());
-            log.info("--gaeaLog:requestData--{}", entity.getRequestParam());
-            log.info("--gaeaLog:requestAllData--{}", JSON.toJSONString(entity));
             //执行回调
             if (!StringUtils.isEmpty(timiLogProperties.getCallbackUrl())) {
                 threadPoolTaskExecutor.execute(() -> {
@@ -103,7 +104,7 @@ public class TimiImportantLogAspects {
             }
         } catch (Exception exp) {
             // 记录本地异常日志
-            log.error("--gaeaLog:error--{}", e.getMessage());
+            log.error("--timiLog:error--{}", e.getMessage());
         }
     }
 
@@ -114,18 +115,20 @@ public class TimiImportantLogAspects {
      * @param TimiLogEntity
      */
     private void restTemplateCallback(TimiLogEntity TimiLogEntity, HttpServletRequest request) {
-        String url = timiLogProperties.getCallbackUrl();
+        String url = timiLogProperties.getCallbackUrl().trim();
         try {
-            log.info("--gaeaLog:callBack:url-{}--", url);
+            log.info("--timiLog:调用http写日志:url-{}--", url);
             HttpHeaders headers_new = new HttpHeaders();
             headers_new.setContentType(MediaType.APPLICATION_JSON);
             headers_new.set("Accept", "application/json;charset=UTF-8");
             headers_new.set("Authorization", request.getHeader(TimiConstant.Authorization));
-            HttpEntity entity = new HttpEntity(TimiLogEntity, headers_new);
-            JSONObject responseBody = restTemplate.postForObject(url, entity, JSONObject.class);
-            log.info("--gaeaLog:callBack:response-{}", responseBody);
+            TimiLogDTO dto=new TimiLogDTO();
+            BeanUtils.copyProperties(TimiLogEntity, dto);
+            HttpEntity httpEntity = new HttpEntity(dto, headers_new);
+            JSONObject responseBody = restTemplate.postForObject(url, httpEntity, JSONObject.class);
+            log.info("--timiLog:callBack:response-{}", responseBody);
         } catch (Exception e) {
-            log.error("--gaeaLog:callBack:error--{}", e.getMessage());
+            log.error("--timiLog:callBack:error--{}", e.getMessage());
         }
     }
 

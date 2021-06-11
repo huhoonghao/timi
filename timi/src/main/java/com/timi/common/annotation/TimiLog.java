@@ -20,5 +20,5 @@ public @interface TimiLog {
      * 是否保存请求的参数和响应参数
      */
     boolean isSaveRequestData() default true;
-    boolean isSaveResponseData() default false;
+    boolean isSaveResponseData() default true;
 }

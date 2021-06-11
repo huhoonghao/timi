@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.timi.common.base.BaseEntity;
 import lombok.Data;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -43,6 +44,7 @@ public class TimiLogEntity extends BaseEntity  {
     /**
      * 请求方式get/post/put/delete
      */
+    @Transient
     private String requestMethod;
 
     /**

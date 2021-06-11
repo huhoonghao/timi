@@ -1,6 +1,7 @@
 package com.timi.modules.log.controller.dto;
 
 import com.timi.common.base.BaseDTO;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -8,6 +9,7 @@ import java.util.Date;
  * @author hhh
  * @date 2021/6/8
  */
+@Data
 public class TimiLogDTO extends BaseDTO {
     private String userName;
 
@@ -35,11 +37,6 @@ public class TimiLogDTO extends BaseDTO {
      * 来源IP
      */
     private String sourceIp;
-
-    /**
-     * 请求方式get/post/put/delete
-     */
-    private String requestMethod;
 
     /**
      * 访问时间

@@ -8,6 +8,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -42,6 +43,7 @@ public class TimiLogAopAspect {
     public void doAfter(JoinPoint joinPoint) {
         log.info("===============================定位检查========================");
     }
+
 
     @Around("requestServer()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -87,9 +89,16 @@ public class TimiLogAopAspect {
      * @return
      * */
     private Map<String, Object> getRequestParamsByProceedingJoinPoint(ProceedingJoinPoint proceedingJoinPoint) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+         if (HttpMethod.GET.name().equals(request.getMethod())) {
+            Map<String, String[]> paramMap = request.getParameterMap();
+            log.info("RequestParamsValue :{}",JSON.toJSONString(paramMap));
+
+        }
         //参数名
         String[] paramNames = ((MethodSignature)proceedingJoinPoint.getSignature()).getParameterNames();
-        //参数值
+        //参数类型
         Object[] paramValues = proceedingJoinPoint.getArgs();
 
         return buildRequestParam(paramNames, paramValues);
