@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 public abstract class TimiUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(TimiUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(TimiUtils.class);
     /**
      * 驼峰转下划线
      * @param source

@@ -1,4 +1,4 @@
-package com.timi.common.test;
+package com.timi.common.demo.stream;
 
 import java.util.*;
 import java.util.stream.Collectors;

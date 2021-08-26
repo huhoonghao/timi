@@ -1,7 +1,6 @@
 package com.timi.common.sms;
 
 import com.timi.common.config.SendMessageConfig;
-import com.timi.common.config.TimiProperties;
 import com.timi.common.constant.SmsConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;

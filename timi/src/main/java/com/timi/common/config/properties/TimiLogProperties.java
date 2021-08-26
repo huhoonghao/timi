@@ -1,4 +1,4 @@
-package com.timi.common.config;
+package com.timi.common.config.properties;
 
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,7 +14,7 @@ public class TimiLogProperties {
     /**
      * 组件名称
      */
-    public final static String COMPONENT_NAME = "audit-log";
+    public static String COMPONENT_NAME = "audit-log";
     /**
      * 微服务架构，可以设置回调地址来获取日志数据
      */

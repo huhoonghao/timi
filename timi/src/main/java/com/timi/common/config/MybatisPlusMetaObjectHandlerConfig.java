@@ -11,7 +11,7 @@ import java.util.Date;
  * 自动补充插入或更新时的值
  */
 @Component
-public class TmsMybatisPlusMetaObjectHandler implements MetaObjectHandler {
+public class MybatisPlusMetaObjectHandlerConfig implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {

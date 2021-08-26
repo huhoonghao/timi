@@ -7,7 +7,7 @@ import org.springframework.util.Assert;
  */
 public class UserContentHolder {
 
-    private static final ThreadLocal<UserContext> userContextThreadLocal = new InheritableThreadLocal<>();
+    private static ThreadLocal<UserContext> userContextThreadLocal = new InheritableThreadLocal<>();
 
     /**
      * 清空

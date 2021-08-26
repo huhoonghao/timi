@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         //根据用户名查询用户
         UserEntity userEntity = userService.findByUsername(username);
 
-        //获取当前用户所拥有的角色
+        //获取当前用户所拥有的角色0
         List<String> userRoles = roleService.getUserRoles(username);
         //获取当前用户的权限
         List<GrantedAuthority> authorities = resourceService.getUserAuthorities(userRoles).stream()

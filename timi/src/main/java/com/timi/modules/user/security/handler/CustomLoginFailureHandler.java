@@ -45,11 +45,16 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
      * 超时时间
      */
     private Long TIME_OUT = 2L;
-    private final static String ERROR_TIMES = "times";
+    private static String ERROR_TIMES = "times";
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String username = request.getParameter("username");
+        if (username==null){
+            username="test";
+            System.out.println("测试-----------------------");
+        }
+
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().print( "login is fail");

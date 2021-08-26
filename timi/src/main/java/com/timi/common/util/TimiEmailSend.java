@@ -9,6 +9,7 @@ import microsoft.exchange.webservices.data.credential.WebCredentials;
 import microsoft.exchange.webservices.data.property.complex.AttachmentCollection;
 import microsoft.exchange.webservices.data.property.complex.EmailAddressCollection;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
+import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ import java.util.Map;
 @Component
 public class TimiEmailSend {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TimiEmailSend.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(TimiEmailSend.class);
 
 	/**
 	 * ews 发送邮件
@@ -49,7 +50,7 @@ public class TimiEmailSend {
 			service.setUrl(new URI(emailServer));
 		} catch (Exception e) {
 			LOGGER.info("转发邮件异常,参数：发件邮箱{}, 发件密码{}, 接收人{}, 邮件标题{}, {}", sender, senderPwd, receivers, subject, e);
-//            throw new ServiceException("发信邮箱服务器连接失败", e);
+            throw new ServiceException("发信邮箱服务器连接失败", e);
 		}
 
 		EmailMessage msg = null;

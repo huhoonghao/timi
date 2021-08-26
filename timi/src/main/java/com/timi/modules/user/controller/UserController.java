@@ -25,6 +25,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static org.springframework.http.codec.ServerSentEvent.builder;
 
@@ -131,6 +132,9 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     public ResponseBean signIn(@Validated @RequestBody UserSignInParam reqParam){
         return responseSuccessData(userService.signIn(reqParam));
     }
+    /**
+     * 发送验证码
+     * **/
     @PostMapping("/signIn/send")
     public ResponseBean sendSignInCode(@RequestParam("phone") String phone){
         return responseSuccessData(userService.signInSendCode(phone));
@@ -149,9 +153,8 @@ public class UserController extends BaseController <UserParam, UserEntity, UserD
     public ResponseBean testEmail(){
         List<String> li=new ArrayList();
         li.add("1398981989@qq.com");
-        timiEmailSend.sendMail("https://mail.anji-ceva.com/ews/exchange.asmx","huhonghao@anji-plus.com","P@ss1234",li,null,"test","123",null);
-
-        return responseSuccessData(userService.signInSendCode(null));
+        timiEmailSend.sendMail("https://mail.anji-plus.com/ews/exchange.asmx","huhonghao@anji-plus.com","P@ss1234",li,null,"TIMI","用户已注销 请知晓!!!",null);
+        return responseSuccessData(null);
 
     }
 

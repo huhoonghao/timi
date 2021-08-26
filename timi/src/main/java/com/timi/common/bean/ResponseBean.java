@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 /**
  * 响应体封装
  */
-public final class ResponseBean implements Serializable {
+public class ResponseBean implements Serializable {
 
     public ResponseBean() {
 

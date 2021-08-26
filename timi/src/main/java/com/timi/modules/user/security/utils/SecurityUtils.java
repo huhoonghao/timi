@@ -13,7 +13,7 @@ public class SecurityUtils {
     /**
      * 保存登录信息
      */
-    public static final ThreadLocal<JSONObject> loginInfoThreadLocal = new ThreadLocal<>();
+    public static ThreadLocal<JSONObject> loginInfoThreadLocal = new ThreadLocal<>();
 
     /**
      * 获取密码

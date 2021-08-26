@@ -7,11 +7,11 @@ import java.security.MessageDigest;
  * @Title: MD5工具类
  * @Description: MD5工具类
  */
-public final class MD5Util {
+public class MD5Util {
 
     private static MD5Util md5Util = null;
 
-    private static final String MD5_SALT = "timi";
+    private static String MD5_SALT = "timi";
 
     public static synchronized MD5Util getInstance() {
 

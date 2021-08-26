@@ -1,6 +1,7 @@
 package com.timi.common.config;
 
 import com.timi.common.annotation.TimiImportantLogAspects;
+import com.timi.common.init.ApplicationInitRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -23,4 +24,5 @@ public class TimiLogAutoConfiguration {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 }

@@ -2,7 +2,7 @@ package com.timi.common.annotation;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.timi.common.config.TimiLogProperties;
+import com.timi.common.config.properties.TimiLogProperties;
 import com.timi.common.constant.TimiConstant;
 import com.timi.modules.log.controller.dto.TimiLogDTO;
 import com.timi.modules.log.entity.TimiLogEntity;
@@ -33,7 +33,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.Date;
 import java.util.Map;
 
@@ -67,7 +66,7 @@ public class TimiImportantLogAspects {
         handleLog(joinPoint, e, null);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult)  {
+    protected void handleLog(JoinPoint joinPoint, Exception e, Object jsonResult)  {
 
         try {  // 获得注解
             TimiLog controllerLog = getAnnotationLog(joinPoint);
@@ -202,7 +201,7 @@ public class TimiImportantLogAspects {
      * @param o 对象信息。
      * @return 如果是需要过滤的对象，则返回true；否则返回false。
      */
-    public boolean isFilterObject(final Object o) {
+    public boolean isFilterObject(Object o) {
         return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse;
     }
 
